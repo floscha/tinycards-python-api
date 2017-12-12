@@ -37,14 +37,14 @@ class RestApi(object):
             identifier (str): The Tinycards identifier to use for logging in.
                 For example, a user's email address.
                 Will be taken from ENV if not specified:
-                .. envvar:: IDENTIFIER
+                .. envvar:: TINYCARDS_IDENTIFIER
             password (str): The user's password to login to Tinycards.
                 Will be taken from ENV if not specified.
-                .. envvar:: PASSWORD
+                .. envvar:: TINYCARDS_PASSWORD
         """
         # Take credetioals from ENV if not specified.
-        identifier = identifier or os.environ.get('IDENTIFIER')
-        password = password or os.environ.get('PASSWORD')
+        identifier = identifier or os.environ.get('TINYCARDS_IDENTIFIER')
+        password = password or os.environ.get('TINYCARDS_PASSWORD')
 
         request_payload = {
             'identifier': identifier,

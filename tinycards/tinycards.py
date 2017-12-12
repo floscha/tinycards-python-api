@@ -12,10 +12,10 @@ class Tinycards(object):
         identifier (str): The Tinycards identifier to use for logging in.
             For example, a user's email address.
             Will be taken from ENV if not specified:
-            .. envvar:: IDENTIFIER
+            .. envvar:: TINYCARDS_IDENTIFIER
         password (str): The user's password to login to Tinycards.
             Will be taken from ENV if not specified.
-            .. envvar:: PASSWORD
+            .. envvar:: TINYCARDS_PASSWORD
     """
 
     def __init__(self,
