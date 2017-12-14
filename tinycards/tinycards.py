@@ -25,6 +25,19 @@ class Tinycards(object):
         self.data_source = RestApi()
         self.user_id = self.data_source.login(identifier, password)
 
+    # --- Read user info.
+
+    def get_user_info(self):
+        """Get info data about the currently logged in user.
+
+        Returns:
+            user: A User object for the current user.
+
+        """
+        user_info = self.data_source.get_decks(self.user_id)
+
+        return user_info
+
     # --- Deck CRUD
 
     def get_decks(self):

@@ -60,6 +60,21 @@ class RestApi(object):
 
         return user_id
 
+    # --- Read user info.
+
+    def get_user_info(self, user_id):
+        """Get info data about the given user."""
+        request_url = API_URL + 'users/' + str(user_id)
+        r = self.session.get(url=request_url)
+
+        if r.status_code != 200:
+            raise ValueError(r.text)
+
+        json_response = r.json()
+        user_info = json_converter.json_to_user(json_response)
+
+        return user_info
+
     # --- Deck CRUD
 
     def get_decks(self, user_id):
