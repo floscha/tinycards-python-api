@@ -17,3 +17,11 @@ An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duo
 >>> client  = tinycards.Tinycards()
 'Logged in as 'username' (user@email.com)'
 ```
+
+### Get all decks of an user
+
+```python
+>>> all_decks = tinycards.get_decks()
+>>> [deck.title for deck in all_decks]
+['Deck 1', 'Deck 2', 'Deck 3']
+```
