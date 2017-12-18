@@ -18,7 +18,7 @@ An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duo
 'Logged in as 'username' (user@email.com)'
 ```
 
-### Get all decks of an user
+### Get all decks of a user
 
 ```python
 >>> all_decks = tinycards.get_decks()
