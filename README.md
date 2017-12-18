@@ -34,3 +34,15 @@ $ pip install -r requirements.txt
 >>> [deck.title for deck in all_decks]
 ['Deck 1', 'Deck 2', 'Deck 3']
 ```
+
+### Update an existing deck
+
+```python
+>>> deck_1 = tinycards.find_deck_by_title('Deck 1')
+>>> deck_1.title = 'Deck 1.1'
+>>> tinycards.update_deck(deck_1)
+{
+  'title': 'Deck 1.1',
+  ...
+}
+```
