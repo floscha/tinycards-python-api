@@ -5,6 +5,15 @@
 An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duolingo.
 
 
+## Installation
+
+1. Make sure Python (with pip) is installed.
+2. Install dependencies from the requirements.txt (hint: requests is the only requirement right now):
+```
+$ pip install -r requirements.txt
+```
+
+
 ## Usage
 
 ### Initialise a new client
