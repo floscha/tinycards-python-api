@@ -46,3 +46,22 @@ $ pip install -r requirements.txt
   ...
 }
 ```
+
+### Delete an existing deck
+
+```python
+>>> deck = tinycards.find_deck_by_title('Some Deck')
+{
+  'title': 'Some Deck',
+  'id': '8176b324-addc-495d-aadc-fad005e5b439'
+  ...
+}
+>>> tinycards.delete_deck(deck.id)
+{
+  'title': 'Some Deck',
+  'id': '8176b324-addc-495d-aadc-fad005e5b439'
+  ...
+}
+>>> deck = tinycards.find_deck_by_title('Some Deck')
+None
+```
