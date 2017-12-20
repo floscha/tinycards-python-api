@@ -27,6 +27,18 @@ $ pip install -r requirements.txt
 'Logged in as 'username' (user@email.com)'
 ```
 
+### Get info about the currently logged in user.
+
+```python
+>>> user = client.get_user_info()
+{
+  username: 'bachman',
+  email: 'bachman@aviato.com',
+  fullname: 'Erlich Bachman',
+  ...
+}
+```
+
 ### Get all decks of a user
 
 ```python
