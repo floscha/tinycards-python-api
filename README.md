@@ -30,7 +30,7 @@ $ pip install -r requirements.txt
 ### Get all decks of a user
 
 ```python
->>> all_decks = tinycards.get_decks()
+>>> all_decks = client.get_decks()
 >>> [deck.title for deck in all_decks]
 ['Deck 1', 'Deck 2', 'Deck 3']
 ```
@@ -38,9 +38,9 @@ $ pip install -r requirements.txt
 ### Update an existing deck
 
 ```python
->>> deck_1 = tinycards.find_deck_by_title('Deck 1')
+>>> deck_1 = client.find_deck_by_title('Deck 1')
 >>> deck_1.title = 'Deck 1.1'
->>> tinycards.update_deck(deck_1)
+>>> client.update_deck(deck_1)
 {
   'title': 'Deck 1.1',
   ...
@@ -50,18 +50,18 @@ $ pip install -r requirements.txt
 ### Delete an existing deck
 
 ```python
->>> deck = tinycards.find_deck_by_title('Some Deck')
+>>> deck = client.find_deck_by_title('Some Deck')
 {
   'title': 'Some Deck',
   'id': '8176b324-addc-495d-aadc-fad005e5b439'
   ...
 }
->>> tinycards.delete_deck(deck.id)
+>>> client.delete_deck(deck.id)
 {
   'title': 'Some Deck',
   'id': '8176b324-addc-495d-aadc-fad005e5b439'
   ...
 }
->>> deck = tinycards.find_deck_by_title('Some Deck')
+>>> deck = client.find_deck_by_title('Some Deck')
 None
 ```
