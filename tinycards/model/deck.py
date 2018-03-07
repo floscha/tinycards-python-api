@@ -38,4 +38,6 @@ class Deck(object):
                 back=card[1],
                 user_id=self.user_id
             )
+        else:
+            raise ValueError("Invalid card used as argument")
         self.cards.append(new_card)
