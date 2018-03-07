@@ -10,7 +10,7 @@ An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duo
 1. Make sure Python with [Setuptools](https://pypi.python.org/pypi/setuptools) is installed.
 2. From the project's root folder, install using pip:
 ```
-$ pip install -e .
+$ pip install .
 ```
 3. Import in your Python code:
 ```python
