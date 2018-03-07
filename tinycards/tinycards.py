@@ -121,7 +121,7 @@ class Tinycards(object):
         """Delete an existing deck.
 
         Args:
-            deck (Deck): The Deck object to delete.
+            deck_id (Deck): The ID of the Deck to delete.
 
         Returns:
             Deck: The deleted Deck object if deletion was successful.
