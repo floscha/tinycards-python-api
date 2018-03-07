@@ -1,9 +1,9 @@
 import os
-from uuid import uuid4
 
 import requests
 
 from networking import json_converter
+from networking.form_utils import generate_form_boundary, to_multipart_form
 
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
@@ -123,37 +123,6 @@ class RestApi(object):
 
         return deck
 
-    @staticmethod
-    def _generate_form_boundary():
-        """Generate a 16 digit boundary like the one used by Tinycards."""
-        boundary = str(uuid4()).replace('-', '')[:16]
-        return boundary
-
-    @staticmethod
-    def _to_multipart_form(data, boundary):
-        """Create a multipart form like produced by HTML forms from a dict."""
-        form_lines = []
-        for k, v in data.items():
-            form_lines.append('--' + boundary)
-            # Handle special case for imageFile.
-            if k == 'imageFile':
-                form_lines.append('Content-Disposition: form-data; ' +
-                                  'name="%s"; filename="cover.jpg"' % k)
-                form_lines.append('Content-Type: image/jpeg')
-                form_lines.append('')
-                form_lines.append('')
-            else:
-                form_lines.append('Content-Disposition: form-data; name="%s"'
-                                  % k)
-                form_lines.append('')
-                # Lowercase bool values to follow JSON standards.
-                form_lines.append(str(v) if type(v) is not bool
-                                  else str(v).lower())
-        form_lines.append('--' + boundary + '--')
-
-        joined_form = '\n'.join(form_lines)
-        return joined_form
-
     def create_deck(self, deck):
         """Create a new Deck for the currently logged in user.
 
@@ -164,7 +133,7 @@ class RestApi(object):
             Deck: The created Deck object if creation was successful.
 
         """
-        form_boundary = self._generate_form_boundary()
+        form_boundary = generate_form_boundary()
 
         # Clone headers to not modify the global variable.
         headers = dict(DEFAULT_HEADERS)
@@ -173,8 +142,7 @@ class RestApi(object):
                                    % form_boundary)
 
         request_payload = json_converter.deck_to_json(deck)
-        request_payload = self._to_multipart_form(request_payload,
-                                                  form_boundary)
+        request_payload = to_multipart_form(request_payload, form_boundary)
         r = self.session.post(url=API_URL + 'decks',
                               headers=headers,
                               data=request_payload)
