@@ -7,12 +7,15 @@ An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duo
 
 ## Installation
 
-1. Make sure Python (with pip) is installed.
-2. Install dependencies from the requirements.txt (hint: requests is the only requirement right now):
+1. Make sure Python with [Setuptools](https://pypi.python.org/pypi/setuptools) is installed.
+2. From the project's root folder, install using pip:
 ```
-$ pip install -r requirements.txt
+$ pip install -e .
 ```
-
+3. Import in your Python code:
+```python
+import tinycards
+```
 
 ## Usage
 
