@@ -5,17 +5,30 @@ from .fact import Fact
 from .side import Side
 
 
+def current_timestamp():
+    """Get current time in milliseconds.
+
+    While Python usually works in seconds, JavaScript uses milliseconds and
+    we want to be compatible.
+    """
+    from time import time
+    return int(time()) * 1000
+
+
 class Card(object):
     """Data class for an Tinycards card entity."""
 
     def __init__(self,
                  front,
                  back,
-                 user_id,
-                 card_id=None):
+                 user_id=None,
+                 card_id=None,
+                 creation_timestamp=None):
         """Initialize a new instance of the Card class."""
         self.id = card_id if card_id else str(uuid4())
         self.user_id = user_id
+
+        self.creation_timestamp = creation_timestamp or current_timestamp()
 
         # While Tinycards originally uses a (2 element) tuple to
         # represent both sides, we chose to go with a more

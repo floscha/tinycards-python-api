@@ -169,8 +169,12 @@ class RestApi(object):
                                headers=headers,
                                json=request_payload)
 
-        json_data = r.json()
-        updated_deck = json_converter.json_to_deck(json_data)
+        if not r.ok:
+            raise Exception("Failure while sending updates to server")
+
+        # The response from the PATCH request does not contain cards.
+        # Therefore, we have to query the updated deck with an extra request.
+        updated_deck = self.get_deck(deck.id, deck.user_id)
 
         return updated_deck
 
