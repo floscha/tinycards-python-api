@@ -1,10 +1,5 @@
 """Several helper functions to convert between data objects and JSON."""
-from model.card import Card
-from model.concept import Concept
-from model.deck import Deck
-from model.fact import Fact
-from model.side import Side
-from model.user import User
+from model import Card, Concept, Deck, Fact, Side, User
 
 
 # --- User conversion
