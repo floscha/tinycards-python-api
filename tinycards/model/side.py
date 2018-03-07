@@ -1,6 +1,7 @@
 from uuid import uuid4
 
-from model.concept import Concept
+from .concept import Concept
+
 
 class Side(object):
     """"Data class for an Tinycards side entity."""

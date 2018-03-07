@@ -1,8 +1,8 @@
 from uuid import uuid4
 
-from model.concept import Concept
-from model.fact import Fact
-from model.side import Side
+from .concept import Concept
+from .fact import Fact
+from .side import Side
 
 
 class Card(object):

@@ -1,4 +1,4 @@
-from model.card import Card
+from .card import Card
 
 
 class Deck(object):

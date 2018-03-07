@@ -1,5 +1,5 @@
 """Several helper functions to convert between data objects and JSON."""
-from model import Card, Concept, Deck, Fact, Side, User
+from tinycards.model import Card, Concept, Deck, Fact, Side, User
 
 
 # --- User conversion

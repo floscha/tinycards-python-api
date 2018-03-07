@@ -2,8 +2,8 @@ import os
 
 import requests
 
-from networking import json_converter
-from networking.form_utils import generate_form_boundary, to_multipart_form
+from . import json_converter
+from .form_utils import generate_form_boundary,to_multipart_form
 
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
