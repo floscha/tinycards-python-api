@@ -18,7 +18,7 @@ DEFAULT_HEADERS = {
 
 
 class RestApi(object):
-    """Repository-like fascade for the Tinycards API.
+    """Repository-like facade for the Tinycards API.
 
     Abstracts away all queries to the original Tinycards API and handles all
     JSON (un-)marshalling.
@@ -42,7 +42,7 @@ class RestApi(object):
                 Will be taken from ENV if not specified.
                 .. envvar:: TINYCARDS_PASSWORD
         """
-        # Take credetioals from ENV if not specified.
+        # Take credentials from ENV if not specified.
         identifier = identifier or os.environ.get('TINYCARDS_IDENTIFIER')
         password = password or os.environ.get('TINYCARDS_PASSWORD')
 
