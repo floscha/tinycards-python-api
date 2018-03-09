@@ -27,6 +27,9 @@ $ python tests/integration_test.py
 
 ## Usage
 
+Below is a list of some of the most common functions.
+For a more practical example, see the [csv_to_deck.py](https://github.com/floscha/tinycards-python-api/blob/master/examples/csv_to_deck.py) script.
+
 ### Initialise a new client
 
 ```python
