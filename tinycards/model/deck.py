@@ -47,7 +47,7 @@ class Deck(object):
     def add_cards_from_csv(self, csv_file,
                            front_column='front',
                            back_column='back'):
-        """Adds word pairs from a CSV file as cards to the deck.
+        """Add word pairs from a CSV file as cards to the deck.
 
         Args:
             csv_file: The file buffer that contains the CSV data.
@@ -57,6 +57,7 @@ class Deck(object):
         Example:
             >>> with open(csv_path, 'r') as csv_file:
             >>>     deck.add_cards_from_csv(csv_file)
+
         """
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
