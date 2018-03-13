@@ -2,6 +2,7 @@
 
 # Tinycards Python API
 
+[![Build Status](https://travis-ci.org/floscha/tinycards-python-api.svg?branch=master)](https://travis-ci.org/floscha/tinycards-python-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duolingo.
