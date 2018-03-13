@@ -2,6 +2,8 @@
 
 # Tinycards Python API
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duolingo.
 
 
