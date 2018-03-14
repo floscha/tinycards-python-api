@@ -4,4 +4,4 @@ python:
 install:
   - pip install .
 script:
-  - python tests/deck_test.py
+  - pytest
