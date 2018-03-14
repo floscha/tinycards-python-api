@@ -38,6 +38,30 @@ class Tinycards(object):
 
         return user_info
 
+    # --- Get trends.
+
+    def get_trends(self, types=None, limit=10, page=0, from_language='en'):
+        """Get Tinycards trends for the current user.
+
+        Args:
+            types (list): What entities to retrieve.
+                Can be DECK, DECK_GROUP or USER.
+            limit: What number of results to should be returned.
+            page: The page to return when returning more than limit results
+                (zero-indexed).
+            from_language: The language used for learning.
+
+        Returns: A list of Trendable objects.
+
+        """
+        if not types:
+            types = ['DECK', 'DECK_GROUP']
+
+        trendables = self.data_source.get_trends(types, limit, page,
+                                                 from_language)
+
+        return trendables
+
     # --- Deck CRUD
 
     def get_decks(self):

@@ -3,7 +3,7 @@ import unittest
 from tinycards import Tinycards
 
 
-class ClientTests(unittest.TestCase):
+class ClientTest(unittest.TestCase):
 
     def setUp(self):
         self.client = Tinycards()

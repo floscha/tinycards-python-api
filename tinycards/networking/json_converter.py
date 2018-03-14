@@ -1,5 +1,6 @@
 """Several helper functions to convert between data objects and JSON."""
-from tinycards.model import Card, Concept, Deck, Fact, Side, User
+from tinycards.model import Card, Concept, Deck, Fact, Side, Trendable
+from tinycards.model import TrendableData, User
 
 
 # --- User conversion
@@ -171,6 +172,96 @@ def deck_to_json(deck_obj, cards_as_string=False):
         'gradingModes': [],
         'fromLanguage': 'en',
         # 'imageFile': None
+    }
+
+    return json_data
+
+
+# --- Trendable conversion
+
+def json_to_trendable(json_data):
+    """Convert a JSON dict into a Trendable object."""
+    json_trendable_data = json_data.get('data')
+    if not json_trendable_data:
+        raise ValueError("JSON object contains no 'data' field")
+
+    try:
+        trendable_data = TrendableData(
+            json_trendable_data['blacklistedQuestionTypes'],
+            json_trendable_data['blacklistedSideIndices'],
+            json_trendable_data['cardCount'],
+            json_trendable_data['compactId'],
+            json_trendable_data['coverImageUrl'],
+            json_trendable_data['createdAt'],
+            json_trendable_data['deckGroups'],
+            json_trendable_data['description'],
+            json_trendable_data['enabled'],
+            json_trendable_data['favoriteCount'],
+            json_trendable_data['fromLanguage'],
+            json_trendable_data['fullname'],
+            json_trendable_data['gradingModes'],
+            json_trendable_data['hashes'],
+            json_trendable_data['id'],
+            json_trendable_data['imageUrl'],
+            json_trendable_data['name'],
+            json_trendable_data['picture'],
+            json_trendable_data['private'],
+            json_trendable_data['shareable'],
+            json_trendable_data['slug'],
+            json_trendable_data['tagIds'],
+            json_trendable_data['ttsLanguages'],
+            json_trendable_data['uiLanguage'],
+            json_trendable_data['updatedAt'],
+            json_trendable_data['userId'],
+            json_trendable_data['username']
+        )
+    except KeyError as ke:
+        raise ke
+
+    trendable_obj = Trendable(id_=json_data['id'],
+                              type_=json_data['type'],
+                              data=trendable_data)
+
+    return trendable_obj
+
+
+def trendable_to_json(trendable_obj: Trendable):
+    """Convert a Trendable object into a JSON dict."""
+    trendable_data = trendable_obj.data
+    json_trendable_data = {
+        'blacklistedQuestionTypes': trendable_data.blacklisted_question_types,
+        'blacklistedSideIndices': trendable_data.blacklisted_side_indices,
+        'cardCount': trendable_data.card_count,
+        'compactId': trendable_data.compact_id,
+        'coverImageUrl': trendable_data.cover_image_url,
+        'createdAt': trendable_data.created_at,
+        'deckGroups': trendable_data.deck_groups,
+        'description': trendable_data.description,
+        'enabled': trendable_data.enabled,
+        'favoriteCount': trendable_data.favorite_count,
+        'fromLanguage': trendable_data.from_language,
+        'fullname': trendable_data.fullname,
+        'gradingModes': trendable_data.grading_modes,
+        'hashes': trendable_data.hashes,
+        'id': trendable_data.id,
+        'imageUrl': trendable_data.image_url,
+        'name': trendable_data.name,
+        'picture': trendable_data.picture,
+        'private': trendable_data.private,
+        'shareable': trendable_data.shareable,
+        'slug': trendable_data.slug,
+        'tagIds': trendable_data.tagIds,
+        'ttsLanguages': trendable_data.tts_languages,
+        'uiLanguage': trendable_data.ui_language,
+        'updatedAt': trendable_data.updated_at,
+        'userId': trendable_data.user_id,
+        'username': trendable_data.username
+    }
+
+    json_data = {
+        'id': trendable_obj.id,
+        'type': trendable_obj.type,
+        'data': json_trendable_data
     }
 
     return json_data
