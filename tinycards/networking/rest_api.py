@@ -111,6 +111,42 @@ class RestApi(object):
 
         return trendables
 
+    # --- Subscriptions
+
+    def subscribe(self, user_id):
+        """Subscribe to the given user.
+
+        Args:
+            user_id: ID of the user to subscribe to.
+
+        Returns: If successful, returns the ID of the user subscribed to.
+
+        """
+        request_url = API_URL + 'users/' + str(user_id) + '/subscriptions'
+        r = self.session.post(url=request_url)
+
+        json_response = r.json()
+        added_subscription = json_response['addedSubscription']
+
+        return added_subscription
+
+    def unsubscribe(self, user_id):
+        """Unsubscribe the given user.
+
+        Args:
+            user_id: ID of the user to unsubscribe.
+
+        Returns: If successful, returns the ID of the unsubscribed user.
+
+        """
+        request_url = API_URL + 'users/' + str(user_id) + '/subscriptions'
+        r = self.session.delete(url=request_url)
+
+        json_response = r.json()
+        removed_subscription = json_response['removedSubscription']
+
+        return removed_subscription
+
     # --- Deck CRUD
 
     def get_decks(self, user_id):

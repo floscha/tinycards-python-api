@@ -62,6 +62,34 @@ class Tinycards(object):
 
         return trendables
 
+    # --- Subscriptions
+
+    def subscribe(self, user_id):
+        """Subscribe to the given user.
+
+        Args:
+            user_id: ID of the user to subscribe to.
+
+        Returns: If successful, returns the ID of the user subscribed to.
+
+        """
+        added_subscription = self.data_source.subscribe(user_id)
+
+        return added_subscription
+
+    def unsubscribe(self, user_id):
+        """Unsubscribe the given user.
+
+        Args:
+            user_id: ID of the user to unsubscribe.
+
+        Returns: If successful, returns the ID of the unsubscribed user.
+
+        """
+        removed_subscription = self.data_source.unsubscribe(user_id)
+
+        return removed_subscription
+
     # --- Deck CRUD
 
     def get_decks(self):
