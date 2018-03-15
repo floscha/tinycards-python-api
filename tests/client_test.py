@@ -8,6 +8,11 @@ class ClientTest(unittest.TestCase):
     def setUp(self):
         self.client = Tinycards()
 
+        # Remove all favorites to start from a clean slate.
+        favorites = self.client.get_favorites()
+        for fav in favorites:
+            self.client.remove_favorite(fav.id)
+
     def test_get_trends_returns_10_decks(self):
         trends = self.client.get_trends()
 
@@ -55,14 +60,19 @@ class ClientTest(unittest.TestCase):
         # https://tinycards.duolingo.com/decks/3JyetMiC/writing-arabic
         # (ID = 79c92553-369b-41af-b1ee-8f95110eb456)
         deck_id = '79c92553-369b-41af-b1ee-8f95110eb456'
-        expected_id = deck_id
 
-        added_deck = self.client.add_favorite(deck_id)
+        added_favorite = self.client.add_favorite(deck_id)
 
-        added_deck_id = added_deck.id
-        self.assertEqual(expected_id, added_deck_id)
         favorites = self.client.get_favorites()
         self.assertEqual(1, len(favorites))
+        self.assertEqual(deck_id, favorites[0].deck.id)
+
+        # Remove the previously added deck from favorites.
+        expected_removed_id = added_favorite.id
+
+        removed_favorite_id = self.client.remove_favorite(added_favorite.id)
+
+        self.assertEqual(expected_removed_id, removed_favorite_id)
 
 
 if __name__ == '__main__':
