@@ -77,7 +77,12 @@ class ClientTest(unittest.TestCase):
         self.assertEqual(0, len(favorites))
 
     def test_search(self):
-        """Test the `search()` method."""
+        """Test the `search()` method.
+
+        Assumes that the very popular 'Duolingo French Course' will appear as
+        the top result for the search query 'french'.
+
+        """
         search_query = 'french'
         expected_first_result_id = '988b66f6-5fbb-4649-a641-0bebb8541496'
 
