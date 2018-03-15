@@ -319,9 +319,8 @@ class RestApi(object):
 
         json_response = r.json()
         added_favorite = json_converter.json_to_favorite(json_response)
-        added_favorite_id = added_favorite.id
 
-        return added_favorite_id
+        return added_favorite
 
     def remove_favorite(self, user_id, favorite_id):
         """Add a deck to the current user's favorites.
