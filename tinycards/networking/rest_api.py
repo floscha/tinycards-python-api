@@ -321,3 +321,23 @@ class RestApi(object):
         added_deck = json_converter.json_to_deck(json_response['deck'])
 
         return added_deck
+
+    def remove_favorite(self, user_id, favorite_id):
+        """Add a deck to the current user's favorites.
+
+        Args:
+            user_id (int): ID of the user to favorite the deck for.
+            favorite_id (str): The ID of the favorite to be removed.
+
+        Returns:
+            str: The ID of the removed favorite.
+
+        """
+        request_url = API_URL + 'users/%d/favorites/%s' % (user_id,
+                                                           favorite_id)
+        r = self.session.delete(url=request_url)
+
+        json_response = r.json()
+        removed_favorite_id = json_response['removedFavoriteId']
+
+        return removed_favorite_id

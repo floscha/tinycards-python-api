@@ -215,3 +215,18 @@ class Tinycards(object):
         added_deck = self.data_source.add_favorite(self.user_id, deck_id)
 
         return added_deck
+
+    def remove_favorite(self, favorite_id):
+        """Add a deck to the current user's favorites.
+
+        Args:
+            favorite_id (str): The ID of the favorite to be removed.
+
+        Returns:
+            str: The ID of the removed favorite.
+
+        """
+        removed_favorite_id = self.data_source.remove_favorite(self.user_id,
+                                                               favorite_id)
+
+        return removed_favorite_id
