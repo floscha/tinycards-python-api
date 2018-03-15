@@ -198,7 +198,7 @@ def json_to_trendable(json_data):
             json_trendable_data['enabled'],
             json_trendable_data['favoriteCount'],
             json_trendable_data['fromLanguage'],
-            json_trendable_data['fullname'],
+            json_trendable_data.get('fullname'),
             json_trendable_data['gradingModes'],
             json_trendable_data['hashes'],
             json_trendable_data['id'],
