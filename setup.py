@@ -6,7 +6,7 @@ requirements = list(open('requirements.txt', 'r').readlines())
 
 setup(
     name=NAME,
-    version='0.1',
+    version='0.2',
     description="An unofficial Python API for Tinycards by Duolingo",
     url='https://github.com/floscha/tinycards-python-api',
     author='Florian Schäfer',
