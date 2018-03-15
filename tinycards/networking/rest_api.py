@@ -301,3 +301,23 @@ class RestApi(object):
             raise Exception("Unexpected JSON format:\n%s" % ke)
 
         return decks
+
+    def add_favorite(self, user_id, deck_id):
+        """Add a deck to the current user's favorites.
+
+        Args:
+            user_id (int): ID of the user to favorite the deck for.
+            deck_id: The ID of the deck to be added.
+
+        Returns:
+            Deck: The deck added to the favorites.
+
+        """
+        request_url = API_URL + 'users/%d/favorites' % user_id
+        request_payload = {'deckId': deck_id}
+        r = self.session.post(url=request_url, json=request_payload)
+
+        json_response = r.json()
+        added_deck = json_converter.json_to_deck(json_response['deck'])
+
+        return added_deck

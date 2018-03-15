@@ -201,3 +201,17 @@ class Tinycards(object):
         favorite_decks = self.data_source.get_favorites(user_id)
 
         return favorite_decks
+
+    def add_favorite(self, deck_id):
+        """Add a deck to the current user's favorites.
+
+        Args:
+            deck_id: The ID of the deck to be added.
+
+        Returns:
+            Deck: The deck added to the favorites.
+
+        """
+        added_deck = self.data_source.add_favorite(self.user_id, deck_id)
+
+        return added_deck

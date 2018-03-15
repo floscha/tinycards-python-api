@@ -51,6 +51,19 @@ class ClientTest(unittest.TestCase):
 
         self.assertEqual(0, len(favorites))
 
+        # Add the following deck:
+        # https://tinycards.duolingo.com/decks/3JyetMiC/writing-arabic
+        # (ID = 79c92553-369b-41af-b1ee-8f95110eb456)
+        deck_id = '79c92553-369b-41af-b1ee-8f95110eb456'
+        expected_id = deck_id
+
+        added_deck = self.client.add_favorite(deck_id)
+
+        added_deck_id = added_deck.id
+        self.assertEqual(expected_id, added_deck_id)
+        favorites = self.client.get_favorites()
+        self.assertEqual(1, len(favorites))
+
 
 if __name__ == '__main__':
     unittest.main()
