@@ -182,3 +182,22 @@ class Tinycards(object):
         deleted_deck = self.data_source.delete_deck(deck_id)
 
         return deleted_deck
+
+    # --- Favorites CR(U)D
+
+    def get_favorites(self, user_id=None):
+        """Get all favorites for the given user.
+
+        Args:
+            user_id (int): ID of the user to get favorites for.
+
+        Returns:
+            list: The list of retrieved decks.
+
+        """
+        if not user_id:
+            user_id = self.user_id
+
+        favorite_decks = self.data_source.get_favorites(user_id)
+
+        return favorite_decks

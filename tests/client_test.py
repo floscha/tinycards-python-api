@@ -44,6 +44,13 @@ class ClientTest(unittest.TestCase):
 
         self.assertEqual(expected_removed_subscription, removed_subscription)
 
+    def test_favorite_functionality(self):
+        """Test all functionality to manage favorites."""
+
+        favorites = self.client.get_favorites()
+
+        self.assertEqual(0, len(favorites))
+
 
 if __name__ == '__main__':
     unittest.main()

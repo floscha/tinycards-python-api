@@ -272,3 +272,32 @@ class RestApi(object):
         deleted_deck = json_converter.json_to_deck(json_data)
 
         return deleted_deck
+
+    # --- Favorites CR(U)D
+
+    def get_favorites(self, user_id):
+        """Get all favorites for the given user.
+
+        Args:
+            user_id (int): ID of the user to get favorites for.
+
+        Returns:
+            list: The list of retrieved decks.
+
+        """
+        request_url = API_URL + 'users/%d/favorites' % user_id
+        r = self.session.get(url=request_url)
+
+        if r.status_code != 200:
+            raise ValueError(r.text)
+
+        json_response = r.json()
+        decks = []
+        try:
+            for fav in json_response['favorites']:
+                current_deck = json_converter.json_to_deck(fav['deck'])
+                decks.append(current_deck)
+        except KeyError as ke:
+            raise Exception("Unexpected JSON format:\n%s" % ke)
+
+        return decks
