@@ -73,6 +73,8 @@ class ClientTest(unittest.TestCase):
         removed_favorite_id = self.client.remove_favorite(added_favorite.id)
 
         self.assertEqual(expected_removed_id, removed_favorite_id)
+        favorites = self.client.get_favorites()
+        self.assertEqual(0, len(favorites))
 
 
 if __name__ == '__main__':
