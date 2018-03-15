@@ -341,3 +341,46 @@ class RestApi(object):
         removed_favorite_id = json_response['removedFavoriteId']
 
         return removed_favorite_id
+
+    # --- Search
+
+    def search(self,
+               query,
+               use_fuzzy_search=True,
+               types=None,
+               limit=10,
+               page=0):
+        """Searches for decks, deck groups, or users on Tinycards.
+
+        Args:
+            query (str): The used search term(s).
+            use_fuzzy_search (bool): Whether or not to use fuzzy search.
+            types (list): What entity to search for. Can be DECK, DECK_GROUP
+                or USER.
+            limit: Number of results to be returned.
+            page: The page to return when more than `limit` results are
+                available (zero-indexed).
+
+        Returns: A list of Trendable objects.
+
+        """
+        if not types:
+            types = ['DECK', 'DECK_GROUP']
+
+        request_url = API_URL + 'searchables'
+        params = {'query': query,
+                  'useFuzzySearch': use_fuzzy_search,
+                  'types': ','.join(types),
+                  'limit': limit,
+                  'page': page}
+        r = self.session.get(url=request_url, params=params)
+
+        if r.status_code != 200:
+            raise ValueError(r.text)
+
+        json_response = r.json()
+        json_searchables_list = json_response['searchables']
+        searchables = [json_converter.json_to_searchable(searchable)
+                       for searchable in json_searchables_list]
+
+        return searchables

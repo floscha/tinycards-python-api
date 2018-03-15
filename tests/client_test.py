@@ -76,6 +76,17 @@ class ClientTest(unittest.TestCase):
         favorites = self.client.get_favorites()
         self.assertEqual(0, len(favorites))
 
+    def test_search(self):
+        """Test the `search()` method."""
+        search_query = 'french'
+        expected_first_result_id = '988b66f6-5fbb-4649-a641-0bebb8541496'
+
+        search_results = self.client.search(search_query)
+        first_result = search_results[0]
+        actual_first_result_id = first_result.data.id
+
+        self.assertEqual(expected_first_result_id, actual_first_result_id)
+
 
 if __name__ == '__main__':
     unittest.main()

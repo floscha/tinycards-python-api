@@ -230,3 +230,30 @@ class Tinycards(object):
                                                                favorite_id)
 
         return removed_favorite_id
+
+    # --- Search
+
+    def search(self,
+               query,
+               use_fuzzy_search=True,
+               types=None,
+               limit=10,
+               page=0):
+        """Searches for decks, deck groups, or users on Tinycards.
+
+        Args:
+            query (str): The used search term(s).
+            use_fuzzy_search (bool): Whether or not to use fuzzy search.
+            types (list): What entity to search for. Can be DECK, DECK_GROUP
+                or USER.
+            limit: Number of results to be returned.
+            page: The page to return when more than `limit` results are
+                available (zero-indexed).
+
+        Returns: A list of Trendable objects.
+
+        """
+        trendables = self.data_source.search(query, use_fuzzy_search, types,
+                                             limit, page)
+
+        return trendables

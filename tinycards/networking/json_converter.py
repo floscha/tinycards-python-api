@@ -1,6 +1,7 @@
 """Several helper functions to convert between data objects and JSON."""
-from tinycards.model import Card, Concept, Deck, Fact, Favorite, Side
-from tinycards.model import Trendable, TrendableData, User
+from tinycards.model import Card, Concept, Deck, Fact, Favorite
+from tinycards.model import SearchableData, Side, Trendable, TrendableData
+from tinycards.model import User
 
 
 # --- User conversion
@@ -265,6 +266,31 @@ def trendable_to_json(trendable_obj: Trendable):
     }
 
     return json_data
+
+
+# --- Searchable conversion
+
+def json_to_searchable(json_data):
+    """Convert a JSON dict into a Searchable object."""
+    json_searchable_data = json_data.get('data')
+    if not json_searchable_data:
+        raise ValueError("JSON object contains no 'data' field")
+
+    try:
+        searchable_data = SearchableData(
+            json_searchable_data['id'],
+            json_searchable_data['name'],
+            json_searchable_data['description'],
+            json_searchable_data.get('averageFreshness')
+        )
+    except KeyError as ke:
+        raise ke
+
+    searchable_obj = Trendable(id_=json_data['id'],
+                               type_=json_data['type'],
+                               data=searchable_data)
+
+    return searchable_obj
 
 
 # --- Favorite conversion

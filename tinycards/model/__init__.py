@@ -3,6 +3,7 @@ from .concept import Concept
 from .deck import Deck
 from .fact import Fact
 from .favorite import Favorite
+from .searchable_data import SearchableData
 from .side import Side
 from .trendable import Trendable
 from .trendable_data import TrendableData
