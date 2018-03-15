@@ -3,7 +3,7 @@ import os
 import requests
 
 from . import json_converter
-from .form_utils import generate_form_boundary,to_multipart_form
+from .form_utils import generate_form_boundary, to_multipart_form
 
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
@@ -282,7 +282,7 @@ class RestApi(object):
             user_id (int): ID of the user to get favorites for.
 
         Returns:
-            list: The list of retrieved decks.
+            list: The list of favorites.
 
         """
         request_url = API_URL + 'users/%d/favorites' % user_id
@@ -292,15 +292,15 @@ class RestApi(object):
             raise ValueError(r.text)
 
         json_response = r.json()
-        decks = []
+        favorites = []
         try:
             for fav in json_response['favorites']:
-                current_deck = json_converter.json_to_deck(fav['deck'])
-                decks.append(current_deck)
+                current_favorite = json_converter.json_to_favorite(fav)
+                favorites.append(current_favorite)
         except KeyError as ke:
             raise Exception("Unexpected JSON format:\n%s" % ke)
 
-        return decks
+        return favorites
 
     def add_favorite(self, user_id, deck_id):
         """Add a deck to the current user's favorites.
@@ -310,7 +310,7 @@ class RestApi(object):
             deck_id: The ID of the deck to be added.
 
         Returns:
-            Deck: The deck added to the favorites.
+            Favorite: The added favorite.
 
         """
         request_url = API_URL + 'users/%d/favorites' % user_id
@@ -318,9 +318,10 @@ class RestApi(object):
         r = self.session.post(url=request_url, json=request_payload)
 
         json_response = r.json()
-        added_deck = json_converter.json_to_deck(json_response['deck'])
+        added_favorite = json_converter.json_to_favorite(json_response)
+        added_favorite_id = added_favorite.id
 
-        return added_deck
+        return added_favorite_id
 
     def remove_favorite(self, user_id, favorite_id):
         """Add a deck to the current user's favorites.

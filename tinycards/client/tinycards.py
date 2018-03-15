@@ -209,7 +209,7 @@ class Tinycards(object):
             deck_id: The ID of the deck to be added.
 
         Returns:
-            Deck: The deck added to the favorites.
+            Favorite: The added favorite.
 
         """
         added_deck = self.data_source.add_favorite(self.user_id, deck_id)

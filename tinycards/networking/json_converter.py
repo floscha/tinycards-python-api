@@ -1,6 +1,6 @@
 """Several helper functions to convert between data objects and JSON."""
-from tinycards.model import Card, Concept, Deck, Fact, Side, Trendable
-from tinycards.model import TrendableData, User
+from tinycards.model import Card, Concept, Deck, Fact, Favorite, Side
+from tinycards.model import Trendable, TrendableData, User
 
 
 # --- User conversion
@@ -265,3 +265,24 @@ def trendable_to_json(trendable_obj: Trendable):
     }
 
     return json_data
+
+
+# --- Favorite conversion
+
+def json_to_favorite(json_data):
+    """Convert a JSON dict into a Favorite object."""
+    favorite_obj = Favorite(id_=json_data['id'],
+                            deck=json_to_deck(json_data['deck']))
+
+    return favorite_obj
+
+
+def favorite_to_json(favorite_obj: Favorite):
+    """Convert a Favorite object into a JSON dict."""
+    json_data = {
+        'id': favorite_obj.id,
+        'deck': deck_to_json(favorite_obj.deck)
+    }
+
+    return json_data
+
