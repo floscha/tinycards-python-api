@@ -29,10 +29,11 @@ $ pip install -e .
 ## Run Tests
 
 1. In order to run the tests, you need to set the enviroment variables _TINYCARDS_IDENTIFIER_ and _TINYCARDS_PASSWORD_.
-2. Then, from the project's root directory, simply execute the test script:
+2. Then, from the project's root directory, simply start the _pytest_ test runner:
 ```
-$ python tests/integration_test.py 
+$ pytest 
 ```
+3. When all tests were successful, _pytest_ will exit with 0.
 
 ## Usage
 
