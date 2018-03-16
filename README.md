@@ -2,6 +2,9 @@
 
 # Tinycards Python API
 
+[![Python Versions](https://img.shields.io/pypi/pyversions/toga.svg)](https://pypi.python.org/pypi/tinycards)
+[![PyPI Version](https://img.shields.io/pypi/v/tinycards.svg)](https://pypi.python.org/pypi/tinycards)
+[![PyPI Status](https://img.shields.io/pypi/status/tinycards.svg)](https://pypi.python.org/pypi/tinycards)
 [![Build Status](https://travis-ci.org/floscha/tinycards-python-api.svg?branch=master)](https://travis-ci.org/floscha/tinycards-python-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
