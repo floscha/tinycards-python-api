@@ -10,14 +10,20 @@ An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duo
 
 ## Installation
 
+### Install from PyPI
+
+The easiest way to get started is to simple install the library like so:
+```
+$ pip install tinycards
+```
+
+### Install from source
+If you want to modify the library's source code and try out your changes locally, you might want to consider building from source which works like follows:
+
 1. Make sure Python with [Setuptools](https://pypi.python.org/pypi/setuptools) is installed.
 2. From the project's root folder, install using pip:
 ```
-$ pip install .
-```
-3. Import in your Python code:
-```python
-import tinycards
+$ pip install -e .
 ```
 
 ## Run Tests
