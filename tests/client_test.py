@@ -1,3 +1,4 @@
+from time import sleep
 import unittest
 
 from tinycards import Tinycards
@@ -12,6 +13,9 @@ class ClientTest(unittest.TestCase):
         favorites = self.client.get_favorites()
         for fav in favorites:
             self.client.remove_favorite(fav.id)
+
+    def tearDown(self):
+        sleep(1)
 
     def test_get_trends_returns_10_decks(self):
         trends = self.client.get_trends()
