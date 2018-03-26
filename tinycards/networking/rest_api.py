@@ -54,9 +54,12 @@ class RestApi(object):
                               json=request_payload)
         json_response = r.json()
 
-        user_id = json_response['id']
-        print("Logged in as '%s' (%s)"
-              % (json_response['fullname'], json_response['email']))
+        user_id = json_response.get('id')
+        if user_id:
+            print("Logged in as '%s' (%s)"
+                  % (json_response['fullname'], json_response['email']))
+        else:
+            print("Error while trying to log in:\n%s" % json_response)
 
         return user_id
 
