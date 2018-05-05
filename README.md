@@ -1,11 +1,11 @@
 <img src="temporary_logo.png" width="128">
 
 # Tinycards Python API
-
+[![Build Status](https://travis-ci.org/floscha/tinycards-python-api.svg?branch=master)](https://travis-ci.org/floscha/tinycards-python-api)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d7f70b4f2a134b268a9ca610fc0208f9)](https://www.codacy.com/app/floscha/tinycards-python-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=floscha/tinycards-python-api&amp;utm_campaign=Badge_Grade)
 [![Python Versions](https://img.shields.io/pypi/pyversions/toga.svg)](https://pypi.python.org/pypi/tinycards)
 [![PyPI Version](https://img.shields.io/pypi/v/tinycards.svg)](https://pypi.python.org/pypi/tinycards)
 [![PyPI Status](https://img.shields.io/pypi/status/tinycards.svg)](https://pypi.python.org/pypi/tinycards)
-[![Build Status](https://travis-ci.org/floscha/tinycards-python-api.svg?branch=master)](https://travis-ci.org/floscha/tinycards-python-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 An unofficial Python API for [Tinycards](https://tinycards.duolingo.com/) by Duolingo.
