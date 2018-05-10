@@ -13,9 +13,9 @@ class Side(object):
         """Initialize a new instance of the Side class."""
         self.side_id = side_id if side_id else str(uuid4())
         self.user_id = user_id
-        if type(concepts) is Concept:
+        if isinstance(concepts, Concept):
             self.concepts = [concepts]
-        elif type(concepts) is list:
+        elif isinstance(concepts, list):
             self.concepts = concepts
         else:
             raise ValueError("Concepts property can only be a Concept \

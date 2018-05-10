@@ -28,7 +28,7 @@ class TestIntegration(unittest.TestCase):
         """Create a new empty deck."""
         new_deck = Deck('Test Deck', self.tinycards.user_id)
         created_deck = self.tinycards.create_deck(new_deck)
-        self.assertEqual(Deck, type(created_deck))
+        self.assertTrue(isinstance(created_deck, Deck))
 
         num_decks = len(self.tinycards.get_decks())
         self.assertEqual(1, num_decks)
@@ -39,7 +39,7 @@ class TestIntegration(unittest.TestCase):
 
         updated_deck = self.tinycards.update_deck(first_deck)
 
-        self.assertEqual(Deck, type(updated_deck))
+        self.assertTrue(isinstance(updated_deck, Deck))
 
     def _test_update_deck_title(self):
         """Update the title of our deck."""
@@ -48,7 +48,7 @@ class TestIntegration(unittest.TestCase):
 
         updated_deck = self.tinycards.update_deck(test_deck)
 
-        self.assertEqual(Deck, type(updated_deck))
+        self.assertTrue(isinstance(updated_deck, Deck))
         self.assertEqual('Updated Test Deck', updated_deck.title)
 
     def _test_add_cards(self):
@@ -59,7 +59,7 @@ class TestIntegration(unittest.TestCase):
 
         updated_deck = self.tinycards.update_deck(first_deck)
 
-        self.assertEqual(Deck, type(updated_deck))
+        self.assertTrue(isinstance(updated_deck, Deck))
         self.assertEqual(2, len(updated_deck.cards))
 
     def _test_delete_deck(self):

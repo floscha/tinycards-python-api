@@ -263,7 +263,7 @@ class RestApi(object):
             Deck: The deleted Deck object if deletion was successful.
 
         """
-        if type(deck_id) is not str:
+        if not isinstance(deck_id, str):
             raise ValueError("'deck_id' parameter must be of type str")
 
         headers = DEFAULT_HEADERS

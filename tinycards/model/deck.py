@@ -34,7 +34,7 @@ class Deck(object):
 
     def add_card(self, card):
         """Add a new card to the deck."""
-        if type(card) is tuple and len(card) == 2:
+        if isinstance(card, tuple) and len(card) == 2:
             new_card = Card(
                 front=card[0],
                 back=card[1],

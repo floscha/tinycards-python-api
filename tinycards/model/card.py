@@ -33,16 +33,16 @@ class Card(object):
         # While Tinycards originally uses a (2 element) tuple to
         # represent both sides, we chose to go with a more
         # semantic naming here.
-        if type(front) is Side:
+        if isinstance(front, Side):
             self.front = front
-        elif type(front) is str:
+        elif isinstance(front, str):
             self.front = Side(concepts=Concept(Fact(front), self.user_id),
                               user_id=self.user_id)
         else:
             raise ValueError("Front property can only be of type Side")
-        if type(back) is Side:
+        if isinstance(back, Side):
             self.back = back
-        elif type(back) is str:
+        elif isinstance(back, str):
             self.back = Side(concepts=Concept(Fact(back), self.user_id),
                              user_id=self.user_id)
         else:

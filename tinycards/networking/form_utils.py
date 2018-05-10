@@ -24,7 +24,7 @@ def to_multipart_form(data, boundary):
                               % k)
             form_lines.append('')
             # Lowercase bool values to follow JSON standards.
-            form_lines.append(str(v) if type(v) is not bool
+            form_lines.append(str(v) if not isinstance(v, bool)
                               else str(v).lower())
     form_lines.append('--' + boundary + '--')
 
