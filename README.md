@@ -2,6 +2,7 @@
 
 # Tinycards Python API
 [![Build Status](https://travis-ci.org/floscha/tinycards-python-api.svg?branch=master)](https://travis-ci.org/floscha/tinycards-python-api)
+[![Coverage Status](https://coveralls.io/repos/github/floscha/tinycards-python-api/badge.svg?branch=master)](https://coveralls.io/github/floscha/tinycards-python-api?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d7f70b4f2a134b268a9ca610fc0208f9)](https://www.codacy.com/app/floscha/tinycards-python-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=floscha/tinycards-python-api&amp;utm_campaign=Badge_Grade)
 [![Python Versions](https://img.shields.io/pypi/pyversions/toga.svg)](https://pypi.python.org/pypi/tinycards)
 [![PyPI Version](https://img.shields.io/pypi/v/tinycards.svg)](https://pypi.python.org/pypi/tinycards)
