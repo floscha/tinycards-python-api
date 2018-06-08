@@ -9,12 +9,12 @@ from tinycards.model import User
 def json_to_user(json_data):
     """Convert a JSON dict into a User object."""
     user_obj = User(
-        creation_date=json_data['creationDate'],
-        email=json_data['email'],
-        fullname=json_data['fullname'],
+        creation_date=json_data.get('creationDate'),
+        email=json_data.get('email'),
+        fullname=json_data.get('fullname'),
         user_id=json_data['id'],
         learning_language=json_data['learningLanguage'],
-        picture_url=json_data['pictureUrl'],
+        picture_url=json_data['picture'],
         subscribed=json_data['subscribed'],
         subscriber_count=json_data['subscriberCount'],
         subscription_count=json_data['subscriptionCount'],
