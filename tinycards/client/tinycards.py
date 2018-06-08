@@ -34,7 +34,7 @@ class Tinycards(object):
             user: A User object for the current user.
 
         """
-        user_info = self.data_source.get_decks(self.user_id)
+        user_info = self.data_source.get_user_info(self.user_id)
 
         return user_info
 
