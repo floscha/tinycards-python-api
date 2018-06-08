@@ -30,9 +30,11 @@ def json_to_user(json_data):
 def json_to_fact(json_data):
     """Convert a JSON dict into a Fact object."""
     fact_obj = Fact(
-        text=json_data['text'],
         fact_id=json_data['id'],
-        fact_type=json_data['type']
+        fact_type=json_data['type'],
+        text=json_data.get('text'),
+        image_url=json_data.get('imageUrl'),
+        tts_url=json_data.get('ttsUrl')
     )
 
     return fact_obj
