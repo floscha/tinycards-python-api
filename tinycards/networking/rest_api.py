@@ -295,9 +295,10 @@ class RestApi(object):
             raise ValueError(r.text)
 
         json_response = r.json()
+        json_favorite_decks = [fav for fav in json_response['favorites'] if 'deck' in fav]
         favorites = []
         try:
-            for fav in json_response['favorites']:
+            for fav in json_favorite_decks:
                 current_favorite = json_converter.json_to_favorite(fav)
                 favorites.append(current_favorite)
         except KeyError as ke:
