@@ -10,3 +10,5 @@ dist/
 *.egg-info/
 
 .idea
+/venv
+/.coverage
