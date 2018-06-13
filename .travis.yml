@@ -3,12 +3,6 @@ python:
   - "3.6"
 install:
   - pip install -e .
-  - pip install pytest pytest-cov
-  - pip install coveralls
-script:
-  - pytest --cov tinycards-python-api
-after_success:
-  - coveralls
 deploy:
   provider: pypi
   user: floscha
