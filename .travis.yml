@@ -1,10 +1,20 @@
 language: python
 python:
   - "3.6"
+env:
+  global:
+    - TINYCARDS_IDENTIFIER=njam-test
+    - TINYCARDS_PASSWORD=gRaVeATiod
+    - secure: "sSDq33elToCbvI9EnskXZnCDTv3gE8QqkvxntAjKa+ZZEcugzxzOwFPE70KMCqp96nMRmpL6cCHySwNFKHkpUGT/ROsL1tsgvhdVdx6PqbQg9C9/Oqy/jD7MwH4czkL8f0Gq33rbTdMYkGUAKIHRMZQku6tu75kpw4TuJlWTKBeouHbfbtKNCsO5Ize/gpraD0x+olZ6B91jth7WehqZxZRjctjB4bOu9K+woeZE2G1Fzd5AZWRpnnGQwcsAWAqVmooNjdlW4hCSA/AZlR/BHpxKSzbszHNIcAZ3wEttgOa/uXkOOH43+xm+hU7JysZB1qmDLP+U+iMzbx3U2DqC3wVkDNjGU0r8073ahmT1eZJPwb8tk8rfA1B4SjiXVReC++LLLbIWUzsDe5iP1CFC8s3iMRqGcxlaS/wc6DwDkjOqK5FjVN4zeaul8K8AxocSm0zjWKKcfUcX2rYo9eKl2idUaZwdmZ2zh+ubdcYjn2oHPB9f6jl5SVMwNe66aCHf9qh0Cq6Dnuep7A/ry6/YCJairP3ilAfFeY7w7ghxb0f+rWkpMWQBGix20CQd/OfUaecfxpcbJkEUJQv9gN9I2SedYxdgKdEKlfTURCpXj4kZZlGJFDOtmtXbqy8psJaafr2nJHNovR+JFAB0acIECV6u1hhXVAyxgTpX8S+hf9U="
+    - secure: "Oyk/pw/NO1e4veu6X/xQ4y3+GCeiV57TCFeG6SlSEXZFZTKkpMYdm416bIYqfFgp3UrBbZZtKzOAbcrWHYCoIqdo4LZGxiVO9URaiXBKyT1ot/TZ4XrOHVniVGJxzmaYmSj1l89g72DyZPjrvh++198bWNr0lg03yi4nSKkjaenPTnJdUVZDFIMSvCA1DrKIzn5UsDUk0vgO3VeaGYtJaKJ82e+Of4f39Z8INOgyz005T7FpokprtYX9Wbf0egP1HcfugSg+O/xl4autuVyhY+7pG3DK2DnVxXsq0EQYEwGqcXTbz0RcCoudF6Itt51ZdYZPaVmD7KnTCZx4pgdClXhBeSvsWq3FLK9P4yK4UxalrYmbNkRK6XEI5mzW5D12+M3yI7BugQs/Z9UD62OJeXNXMOYWL1HBmYRijntnpHrOMjyS93TJui4HEcoViwZTN/prx2Ci7yRTsvLSB9tPBpym98T+DbA/WWrjayI8LyKrGwJXwlIyp31guufex8P6rxAZ5gexp+HqnIb4CGeI4xfsX7rWoOkZKrnd6e5OTurF5mJ0sR3xq53Gf30slsmebGDQb9aTbd5hcTK/7g6gAfniz3NfFe07+SIvSWTVcicQbRDyRMtjRirg5U045wMvQiPU/dp9/KRkRf1pWTwHN8K8qCpcKhk7Vqf2flMYtMY="
 install:
   - pip install -e .
+  - pip install pytest pytest-cov
+  - pip install coveralls
 script:
-  - python -c "import tinycards"
+  - pytest --cov
+after_success:
+  - coveralls
 deploy:
   provider: pypi
   user: floscha
