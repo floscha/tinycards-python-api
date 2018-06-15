@@ -4,6 +4,7 @@ import requests
 
 from . import json_converter
 from .form_utils import generate_form_boundary, to_multipart_form
+from .error.invalid_response import InvalidResponseError
 
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
@@ -59,7 +60,7 @@ class RestApi(object):
             print("Logged in as '%s' (%s)"
                   % (json_response['username'], json_response['email']))
         else:
-            print("Error while trying to log in:\n%s" % json_response)
+            raise InvalidResponseError("Error while trying to log in:\n%s" % json_response)
 
         return user_id
 
