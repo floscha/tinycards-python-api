@@ -1,11 +1,11 @@
 import os
 
 import requests
+from retrying import retry
 
 from . import json_converter
 from .form_utils import generate_form_boundary, to_multipart_form
 from .error.invalid_response import InvalidResponseError
-
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
 
@@ -16,6 +16,13 @@ DEFAULT_HEADERS = {
                    ' AppleWebKit/537.36 (KHTML, like Gecko)' +
                    ' Chrome/58.0.3029.94 Safari/537.36')
 }
+
+
+def _should_retry_login(exception):
+    if isinstance(exception, InvalidResponseError) \
+            and 'Oops, something went wrong!' in str(exception):
+        return True
+    return False
 
 
 class RestApi(object):
@@ -29,6 +36,7 @@ class RestApi(object):
         """Initialize a new instance of the RestApi class."""
         self.session = requests.session()
 
+    @retry(stop_max_attempt_number=5, wait_fixed=500, retry_on_exception=_should_retry_login)
     def login(self,
               identifier=None,
               password=None):
