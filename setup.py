@@ -13,6 +13,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'requests',
+        'retrying==1.3.3',
     ],
     zip_safe=False,
     classifiers=[
