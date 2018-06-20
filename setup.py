@@ -2,8 +2,6 @@ from setuptools import setup, find_packages
 
 NAME = 'tinycards'
 
-requirements = list(open('requirements.txt', 'r').readlines())
-
 setup(
     name=NAME,
     version='0.21',
@@ -13,7 +11,9 @@ setup(
     author_email='florian.joh.schaefer@gmail.com',
     license='MIT',
     packages=find_packages(),
-    install_requires=requirements,
+    install_requires=[
+        'requests',
+    ],
     zip_safe=False,
     classifiers=[
         'Development Status :: 3 - Alpha',
