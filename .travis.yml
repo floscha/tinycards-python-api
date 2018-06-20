@@ -2,13 +2,13 @@ language: python
 python:
 - '3.6'
 install:
-  - pip install -e .
-  - pip install pytest pytest-cov
-  - pip install coveralls
+- pip install -e .
+- pip install pytest pytest-cov
+- pip install coveralls
 script:
-  - pytest --cov
+- pytest --cov
 after_success:
-  - coveralls
+- coveralls
 deploy:
   provider: pypi
   user: floscha
@@ -18,6 +18,5 @@ env:
   global:
   - TINYCARDS_IDENTIFIER=njam-test
   - TINYCARDS_PASSWORD=gRaVeATiod
-  matrix:
   - secure: YtA+3hTUUXrWqUpknuPwUeA+E2mQVBxtpSpPphtwVJuvaFKTkkdj4rt2vKNKUrapguwNjAGiwJXKOyNxS+QG1KfE0O5uECHfEGDnM5kvOvoNX/Cql25HgzJaUA4MnOgVoxVb+5+CYqPHI21uE8I/jb7NrQ/Bu2xWh/i3OFP354Ni9aU//mGu7AKcaXxcFRLKbir4NFpjcJXvYzxselRtWLlrT1KpanBja/PubUvwuxpMuguVnY0QeOuDfRmasVUzya/uu7sBtHidbndm0Ca1PVaK/BtoFWP9hTHaJi5KWx4ihBIV6oXnZh3G9WSMo7PPMCiO1U0ppv/LFwENc+65QKd1ye1lQ8kgHh7esEPoRSE7ZgUQfxsYTaxNH7AUUTUhiRfdThc6KMxTC3bPDJL0lEpSADxq/t/ayQoDMgYTRZKpPx4vi1b4m75YlEsHuMfe9re9NXS/v34FUfdUrBL19i/SY6njAtUSbBmv/2sHanBw4C3CR9+yTTNKaDvJqAhUtJ4WWt4NizL51Ci4CXbOpSMMUQxzpOtE7vAF2jfUPrl2GtPD8z2PEcveb7ejFkmmINGFEADniILwrKmRiPKJcJDW+aH0+TdDSc7wOVx3RT4Y4LiWhTkakik6QB/cPZ+odoD5sWrW5CzWT227MBRnZ1doCrR0uzbbOKOZr/MrEno=
-  - secure: hqD2YC6DOuSYsxCIVLRWEFFE1PthcQwp7ycIf2U7LPPybGDZxQM92UQYY6VIrwa0O3wpz3YRDzpmzf9nc8TkQkvVJT9Wp6/2H2wfZ+q7scqRBgbigwf10Zq5/1wZiwi+lorCaiceGkQ587MN+N3EE4meLB1hpepVWPu8peoH5kDh52V0w7cVzy0mFyHzDjyxupi8Y59HnzgHPBB8cDONxtqW9Crdy+QEiSM7cNdW0/pnLhO7B2ZHxn14/OW8WirbgYNvp/ArOvVWvnA+HJY4BtHJn1qWWL6hPpMYcf/dwdc3n0Q3Ns1dvsv9crKLL0d6O414YC2RXiml45Fxf2jKKgq/91JyTVjXA8DS5eeKYRnYBNxnZKLYedBq0khHRFDJSWSubLFRGgG7w1Tg/HztHF7LHu53JKzrjKBpTmquJA1lWU+mL5yReGjTsRBdkofScSrEgX/L7Z/jUN65taQ3FqbIKYfKBvuVTIkB4ogUEJDZl/0ZpWfyWNbRtHu8u9ytuA+B7pY6a2KtBTFEO4r0m26JMfVTdL74aVa1iFkkzycC3LUD1+RzVbV7V3E4LmiCQQRZSIGJXyd1VSuTpDClH6sj9r13kFPGtulby1jYJ5051JWfsrP4hG0i+kenZ7t3W/KY8mNGFTLhq3bggcbbmoHbyD9VSQ49/lLmtdxMdgA=
+  - secure: iT7iBCmirS7y+Y+9EFsCtL396i/DYnoqiGEGB2+ZBYnPcMoSLjApvoJGBmyCcYE/v0T7g9+t/TJCuceFJtVrOQLshGw+SZ9KiPMHyfEqGBN187Zpx2n+TEtA+YcgsVIw8NDMLCtOUUfuwR7fSoR5N0gEL673TUDsCw0h9qxCpG872ZKge1bsAOHgGMnm+eE5rk2GDVjLo1CJOBLxhoRHojq9zNu00Ns/d061KowkcM4+CDfhBH7nfYEQnqQvD0t5qXqNZsvt1Uy4iexzSqmKnm+TRe+3vCHp3NmZkRaZsrkGNqUp97l/E6FN1pD90/1n+JIkcBZ7x7X17f3Ip83NKMmlyUHzoVbawCABDKHchp9Ze8BvxWQQl7OH3V0aZMTzMmi7z2zgFPVELGNPHnlvJSnuucsBp3UOGZG2IMPfMNLR/7biL34PdYFxTxRo83N58z94+2Y/4bcWBuZfejiJVFH9ZI2o+/jj1tOWFoBchiA5Ko784oDONGcRRiQnQv2o9X71IElXehlLrkOoW6jwyzfG3Ur56rB/daBySV5JDuzM7DTDgSsZTSCITdtcz0E5K9gyKVYEgJYKH3nuYDeZ6Po98u1QP53xYIEf5stKrykLekIYJ5oaG+4i9qcZVQsSX4Cf8EtAFpWeRyrRzlxKY2kZTIYioquB0t9oUXd0LQg=
