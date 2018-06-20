@@ -9,6 +9,10 @@ script:
 - pytest --cov
 after_success:
 - coveralls
+before_deploy:
+  - rm -rf build/
+  - rm -rf dist/
+  - rm -rf *.egg-info/
 deploy:
   provider: pypi
   user: floscha
