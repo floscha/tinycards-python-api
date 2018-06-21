@@ -105,3 +105,8 @@ For a more practical example, see the [csv_to_deck.py](https://github.com/flosch
 >>> deck = client.find_deck_by_title('Some Deck')
 None
 ```
+
+## Release a new Version
+1. Bump the version in `setup.py`.
+2. Push a new tag to GitHub.
+3. The [Travis build](https://travis-ci.org/floscha/tinycards-python-api) will deploy the release to [PyPI](https://pypi.org/project/tinycards/). 
