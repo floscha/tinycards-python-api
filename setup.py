@@ -4,7 +4,7 @@ NAME = 'tinycards'
 
 setup(
     name=NAME,
-    version='0.21',
+    version='0.22',
     description="An unofficial Python API for Tinycards by Duolingo",
     url='https://github.com/floscha/tinycards-python-api',
     author='Florian Schäfer',
