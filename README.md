@@ -27,7 +27,7 @@ If you want to modify the library's source code and try out your changes locally
 1. Make sure Python with [Setuptools](https://pypi.python.org/pypi/setuptools) is installed.
 2. From the project's root folder, install using pip:
 ```
-$ pip install -e .
+$ pip install .
 ```
 
 ## Run Tests
@@ -35,7 +35,7 @@ $ pip install -e .
 1. In order to run the tests, you need to set the enviroment variables _TINYCARDS_IDENTIFIER_ and _TINYCARDS_PASSWORD_.
 2. Then, from the project's root directory, simply start the _pytest_ test runner:
 ```
-$ pytest 
+$ pytest tinycards
 ```
 3. When all tests were successful, _pytest_ will exit with 0.
 
