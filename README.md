@@ -27,7 +27,7 @@ If you want to modify the library's source code and try out your changes locally
 1. Make sure Python with [Setuptools](https://pypi.python.org/pypi/setuptools) is installed.
 2. From the project's root folder, install using pip:
 ```
-$ pip install -e .
+$ pip install .
 ```
 
 ## Run Tests
