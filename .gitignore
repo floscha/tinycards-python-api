@@ -11,4 +11,5 @@ dist/
 
 .idea
 /venv
+/.env
 /.coverage
