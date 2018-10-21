@@ -36,7 +36,8 @@ class RestApi(object):
         """Initialize a new instance of the RestApi class."""
         self.session = requests.session()
 
-    @retry(stop_max_attempt_number=5, wait_fixed=500, retry_on_exception=_should_retry_login)
+    @retry(stop_max_attempt_number=5, wait_fixed=500,
+           retry_on_exception=_should_retry_login)
     def login(self,
               identifier=None,
               password=None):
@@ -68,7 +69,8 @@ class RestApi(object):
             print("Logged in as '%s' (%s)"
                   % (json_response['username'], json_response['email']))
         else:
-            raise InvalidResponseError("Error while trying to log in:\n%s" % json_response)
+            raise InvalidResponseError("Error while trying to log in:\n%s"
+                                       % json_response)
 
         return user_id
 
@@ -136,6 +138,7 @@ class RestApi(object):
         """
         request_url = API_URL + 'users/' + str(user_id) + '/subscriptions'
         r = self.session.post(url=request_url)
+        print(r.text)
 
         json_response = r.json()
         added_subscription = json_response['addedSubscription']
@@ -304,7 +307,8 @@ class RestApi(object):
             raise ValueError(r.text)
 
         json_response = r.json()
-        json_favorite_decks = [fav for fav in json_response['favorites'] if 'deck' in fav]
+        json_favorite_decks = [fav for fav in json_response['favorites']
+                               if 'deck' in fav]
         favorites = []
         try:
             for fav in json_favorite_decks:
