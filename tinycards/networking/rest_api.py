@@ -34,7 +34,8 @@ class RestApi(object):
 
     def __init__(self):
         """Initialize a new instance of the RestApi class."""
-        self.session = requests.session()
+        # JSON web token
+        self.jwt = None
 
     @retry(stop_max_attempt_number=5, wait_fixed=500,
            retry_on_exception=_should_retry_login)
@@ -60,9 +61,14 @@ class RestApi(object):
             'identifier': identifier,
             'password': password
         }
-        r = self.session.post(url=API_URL + 'login',
-                              json=request_payload)
+        r = requests.post(url=API_URL + 'login', json=request_payload)
         json_response = r.json()
+
+        set_cookie_headers = {
+            k: v for (k, v) in
+            [c.split('=') for c in r.headers['set-cookie'].split('; ')]
+        }
+        self.jwt = set_cookie_headers.get('jwt_token')
 
         user_id = json_response.get('id')
         if user_id:
@@ -79,7 +85,7 @@ class RestApi(object):
     def get_user_info(self, user_id):
         """Get info data about the given user."""
         request_url = API_URL + 'users/' + str(user_id)
-        r = self.session.get(url=request_url)
+        r = requests.get(url=request_url)
 
         if r.status_code != 200:
             raise ValueError(r.text)
@@ -113,7 +119,8 @@ class RestApi(object):
                   'limit': limit,
                   'page': page,
                   'fromLanguage': from_language}
-        r = self.session.get(url=request_url, params=params)
+        r = requests.get(url=request_url, params=params,
+                         cookies={'jwt_token': self.jwt})
 
         if r.status_code != 200:
             raise ValueError(r.text)
@@ -137,8 +144,7 @@ class RestApi(object):
 
         """
         request_url = API_URL + 'users/' + str(user_id) + '/subscriptions'
-        r = self.session.post(url=request_url)
-        print(r.text)
+        r = requests.post(url=request_url, cookies={'jwt_token': self.jwt})
 
         json_response = r.json()
         added_subscription = json_response['addedSubscription']
@@ -155,7 +161,7 @@ class RestApi(object):
 
         """
         request_url = API_URL + 'users/' + str(user_id) + '/subscriptions'
-        r = self.session.delete(url=request_url)
+        r = requests.delete(url=request_url, cookies={'jwt_token': self.jwt})
 
         json_response = r.json()
         removed_subscription = json_response['removedSubscription']
@@ -172,7 +178,7 @@ class RestApi(object):
 
         """
         request_url = API_URL + 'decks?userId=' + str(user_id)
-        r = self.session.get(url=request_url)
+        r = requests.get(request_url, cookies={'jwt_token': self.jwt})
 
         if r.status_code != 200:
             raise ValueError(r.text)
@@ -200,7 +206,7 @@ class RestApi(object):
         request_url = API_URL + 'decks/' + deck_id
         if include_cards:
             request_url += '?expand=true'
-        r = self.session.get(url=request_url)
+        r = requests.get(url=request_url, cookies={'jwt_token': self.jwt})
         json_response = r.json()
 
         deck = json_converter.json_to_deck(json_response)
@@ -230,9 +236,8 @@ class RestApi(object):
 
         request_payload = json_converter.deck_to_json(deck)
         request_payload = to_multipart_form(request_payload, form_boundary)
-        r = self.session.post(url=API_URL + 'decks',
-                              headers=headers,
-                              data=request_payload)
+        r = requests.post(url=API_URL + 'decks', data=request_payload,
+                          headers=headers, cookies={'jwt_token': self.jwt})
 
         json_data = r.json()
         created_deck = json_converter.json_to_deck(json_data)
@@ -252,9 +257,9 @@ class RestApi(object):
         headers = DEFAULT_HEADERS
         request_payload = json_converter.deck_to_json(deck)
 
-        r = self.session.patch(url=API_URL + 'decks/' + deck.id,
-                               headers=headers,
-                               json=request_payload)
+        r = requests.patch(url=API_URL + 'decks/' + deck.id,
+                           json=request_payload, headers=headers,
+                           cookies={'jwt_token': self.jwt})
 
         if not r.ok:
             raise Exception("Failure while sending updates to server")
@@ -280,8 +285,8 @@ class RestApi(object):
 
         headers = DEFAULT_HEADERS
 
-        r = self.session.delete(url=API_URL + 'decks/' + deck_id,
-                                headers=headers)
+        r = requests.delete(url=API_URL + 'decks/' + deck_id, headers=headers,
+                            cookies={'jwt_token': self.jwt})
 
         json_data = r.json()
         deleted_deck = json_converter.json_to_deck(json_data)
@@ -301,7 +306,7 @@ class RestApi(object):
 
         """
         request_url = API_URL + 'users/%d/favorites' % user_id
-        r = self.session.get(url=request_url)
+        r = requests.get(url=request_url, cookies={'jwt_token': self.jwt})
 
         if r.status_code != 200:
             raise ValueError(r.text)
@@ -332,7 +337,8 @@ class RestApi(object):
         """
         request_url = API_URL + 'users/%d/favorites' % user_id
         request_payload = {'deckId': deck_id}
-        r = self.session.post(url=request_url, json=request_payload)
+        r = requests.post(url=request_url, json=request_payload,
+                          cookies={'jwt_token': self.jwt})
 
         json_response = r.json()
         added_favorite = json_converter.json_to_favorite(json_response)
@@ -352,7 +358,7 @@ class RestApi(object):
         """
         request_url = API_URL + 'users/%d/favorites/%s' % (user_id,
                                                            favorite_id)
-        r = self.session.delete(url=request_url)
+        r = requests.delete(url=request_url, cookies={'jwt_token': self.jwt})
 
         json_response = r.json()
         removed_favorite_id = json_response['removedFavoriteId']
@@ -390,7 +396,8 @@ class RestApi(object):
                   'types': ','.join(types),
                   'limit': limit,
                   'page': page}
-        r = self.session.get(url=request_url, params=params)
+        r = requests.get(url=request_url, params=params,
+                         cookies={'jwt_token': self.jwt})
 
         if r.status_code != 200:
             raise ValueError(r.text)
