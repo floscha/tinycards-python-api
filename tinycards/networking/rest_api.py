@@ -170,7 +170,7 @@ class RestApi(object):
 
     # --- Deck CRUD
 
-    def get_decks(self, user_id):
+    def get_decks(self, user_id, no_cards=False):
         """Get all Decks for the currently logged in user.
 
         Returns:
@@ -189,7 +189,10 @@ class RestApi(object):
             current_deck = json_converter.json_to_deck(d)
             decks.append(current_deck)
 
-        return decks
+        if no_cards:
+            return decks
+        else:
+            return [self.get_deck(d.id, user_id) for d in decks]
 
     def get_deck(self, deck_id, user_id, include_cards=True):
         """Get the Deck with the given ID.
