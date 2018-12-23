@@ -108,5 +108,7 @@ None
 
 ## Release a new Version
 1. Bump the version in `setup.py`.
-2. Push a new tag to GitHub.
+2. Push a new tag to GitHub:
+    1. `git tag 0.01`
+    1. `git push origin 0.01`
 3. The [Travis build](https://travis-ci.org/floscha/tinycards-python-api) will deploy the release to [PyPI](https://pypi.org/project/tinycards/). 
