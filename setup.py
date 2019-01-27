@@ -12,7 +12,7 @@ setup(
     license='MIT',
     packages=find_packages(),
     install_requires=[
-        'requests==2.20.1',
+        'requests==2.21.0',
         'retrying==1.3.3',
     ],
     zip_safe=False,
