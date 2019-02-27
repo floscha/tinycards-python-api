@@ -14,7 +14,7 @@ install:
 script:
   - if [[ $TRAVIS_PYTHON_VERSION == 3.6 ]];
     then pytest --cov tinycards;
-    else pytest --ignore tests/client_test.py \
+    else pytest --ignore tests/client_test.py
                 --ignore tests/integration_test.py ;
     fi
 after_success:
