@@ -1,13 +1,26 @@
 language: python
 python:
-  - '3.6'
+  - "3.4"
+  - "3.5"
+  - "3.6"
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: yesinstall:
 install:
   - pip install -e .
   - pip install -r test-requirements.txt
 script:
-  - pytest --cov tinycards
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.6 ]];
+    then pytest --cov tinycards;
+    else pytest --ignore tests/client_test.py \
+                --ignore tests/integration_test.py ;
+    fi
 after_success:
-  - coveralls
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.6 ]];
+    then coveralls;
+    fi
 before_deploy:
   - rm -rf build/
   - rm -rf dist/
