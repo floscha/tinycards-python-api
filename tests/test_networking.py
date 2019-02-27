@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import unittest
 import textwrap
 
@@ -8,8 +9,8 @@ from tinycards.networking.json_converter import deck_to_json
 
 class TestNetworking(unittest.TestCase):
     def test_simple_multipart_form_parsing(self):
-        test_data = {'name': 'test_name',
-                     'description': 'test_description'}
+        test_data = OrderedDict([('name', 'test_name'),
+                                 ('description', 'test_description')])
         test_form_boundary = '----WebKitFormBoundary3BvCIJDoE9COqAff'
 
         produced_form = to_multipart_form(test_data, test_form_boundary)
