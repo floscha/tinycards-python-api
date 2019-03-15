@@ -1,5 +1,6 @@
 import os
 import unittest
+import requests
 
 from tinycards import Tinycards
 from tinycards.model import Deck
@@ -29,6 +30,7 @@ class TestIntegration(unittest.TestCase):
         new_deck = Deck('Test Deck', self.tinycards.user_id)
         created_deck = self.tinycards.create_deck(new_deck)
         self.assertTrue(isinstance(created_deck, Deck))
+        self.assertEqual('', created_deck.shareable_link)
 
         num_decks = len(self.tinycards.get_decks())
         self.assertEqual(1, num_decks)
@@ -75,6 +77,21 @@ class TestIntegration(unittest.TestCase):
         num_decks = len(self.tinycards.get_decks())
         self.assertEqual(0, num_decks)
 
+    def _test_create_shareable_deck(self):
+        """Create a new empty, shareable deck."""
+        new_deck = Deck('Test shareable Deck', self.tinycards.user_id, private=True, shareable=True)
+        created_deck = self.tinycards.create_deck(new_deck)
+        self.assertTrue(isinstance(created_deck, Deck))
+        self.assertNotEqual('', created_deck.shareable_link)
+        resp = requests.get(created_deck.shareable_link)
+        self.assertEqual(200, resp.status_code)
+        self._delete_deck(created_deck.id)  # Clean up after ourselves.
+
+    def _delete_deck(self, deck_id):
+        self.tinycards.delete_deck(deck_id)
+        num_decks = len(self.tinycards.get_decks())
+        self.assertEqual(0, num_decks)
+
     def test_integration(self):
         """Test the whole API.
 
@@ -90,6 +107,8 @@ class TestIntegration(unittest.TestCase):
         self._test_add_cards()
 
         self._test_delete_deck()
+
+        self._test_create_shareable_deck()
 
     def tearDown(self):
         """Clean up after all tests have finished running."""

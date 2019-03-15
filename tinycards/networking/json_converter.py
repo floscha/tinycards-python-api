@@ -141,16 +141,18 @@ def card_to_json(card_obj):
 
 def json_to_deck(json_data):
     """Convert a JSON dict into a Deck object."""
-    deck_obj = Deck(
+    return Deck(
         title=json_data['name'],
         description=json_data['description'],
         deck_id=json_data['id'],
+        compact_id=json_data['compactId'],
+        slug=json_data['slug'],
         cover=json_data['imageUrl'],
         cards=([json_to_card(c) for c in json_data['cards']]
-               if 'cards' in json_data else [])
+               if 'cards' in json_data else []),
+        private=bool(json_data['private']),
+        shareable=bool(json_data['shareable']),
     )
-
-    return deck_obj
 
 
 def deck_to_json(deck_obj, cards_as_string=False):
@@ -166,8 +168,8 @@ def deck_to_json(deck_obj, cards_as_string=False):
     json_data = {
         'name': deck_obj.title,
         'description': deck_obj.description,
-        'private': False,
-        'shareable': False,
+        'private': deck_obj.private,
+        'shareable': deck_obj.shareable,
         'cards': str(cards) if cards_as_string else cards,
         'ttsLanguages': [],
         'blacklistedSideIndices': [],

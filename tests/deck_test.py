@@ -29,6 +29,11 @@ class DeckTest(unittest.TestCase):
                           + 'front word,back word' + line_terminator
         self.assertEqual(expected_output, file_buffer.getvalue())
 
+    def test_shareable_link(self):
+        self.assertEqual('', Deck('Public deck').shareable_link)
+        self.assertEqual('', Deck('Private deck', private=True).shareable_link)
+        self.assertEqual('https://tiny.cards/decks/LEbBQJFU/test', Deck('Shareable deck', private=True, shareable=True, compact_id='LEbBQJFU', slug='test').shareable_link)
+
 
 if __name__ == '__main__':
     unittest.main()
