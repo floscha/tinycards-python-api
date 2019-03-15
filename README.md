@@ -30,15 +30,6 @@ If you want to modify the library's source code and try out your changes locally
 $ pip install .
 ```
 
-## Run Tests
-
-1. In order to run the tests, you need to set the enviroment variables _TINYCARDS_IDENTIFIER_ and _TINYCARDS_PASSWORD_.
-2. Then, from the project's root directory, simply start the _pytest_ test runner:
-```
-$ pytest tinycards
-```
-3. When all tests were successful, _pytest_ will exit with 0.
-
 ## Usage
 
 Below is a list of some of the most common functions.
@@ -112,3 +103,64 @@ None
     1. `git tag 0.01`
     1. `git push origin 0.01`
 3. The [Travis build](https://travis-ci.org/floscha/tinycards-python-api) will deploy the release to [PyPI](https://pypi.org/project/tinycards/). 
+
+## Development
+
+### Local setup
+
+- Install `virtualenv` and create a so-called "virtual", dedicated environment for the `tinycards-python-api` project:
+
+    ```console
+    $ pip install -U virtualenv
+    $ cd /path/to/tinycards-python-api
+    $ virtualenv .
+    $ source bin/activate
+    (tinycards-python-api) $
+    ```
+
+- Install dependencies within the virtual environment:
+
+    ```console
+    (tinycards-python-api) $ pip install -e .
+    (tinycards-python-api) $ pip install -r test-requirements.txt
+    ```
+
+- Develop and test at will.
+
+- Leave the `virtualenv`:
+
+    ```console
+    (tinycards-python-api) $ deactivate
+    $
+    ```
+
+### Run Tests
+
+1. In order to run the _integration_ tests, you need to set the enviroment variables `TINYCARDS_IDENTIFIER` and `TINYCARDS_PASSWORD`.
+   [`direnv`](https://direnv.net/) may be useful to set these automatically & permanently:
+
+    ```console
+    $ touch .envrc
+    $ echo "export TINYCARDS_IDENTIFIER=<id>" >> .envrc
+    $ echo "export TINYCARDS_PASSWORD=<pass>" >> .envrc
+    $ direnv allow
+    direnv: loading .envrc
+    direnv: export +TINYCARDS_IDENTIFIER +TINYCARDS_PASSWORD
+    ```
+
+2. Then, from the project's root directory:
+
+    1. run the unit tests:
+
+        ```console
+        $ pytest --ignore tests/client_test.py --ignore tests/integration_test.py --cov tinycards
+        ```
+
+    2. run all tests:
+       **WARNING**: the integration tests **DELETE** all the decks in the account used to test. Please ensure you either are using a dedicated test account, or do not care about losing your existing decks.
+
+        ```console
+        $ pytest --cov tinycards
+        ```
+
+3. When all tests were successful, `pytest` will exit with `0`.

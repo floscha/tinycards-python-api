@@ -13,3 +13,12 @@ dist/
 /venv
 /.env
 /.coverage
+
+# virtualenv:
+.Python
+bin/
+include/
+lib/
+
+# direnv:
+.envrc
