@@ -21,12 +21,10 @@ class Card(object):
     def __init__(self,
                  front,
                  back,
-                 user_id=None,
                  card_id=None,
                  creation_timestamp=None):
         """Initialize a new instance of the Card class."""
         self.id = card_id if card_id else str(uuid4())
-        self.user_id = user_id
 
         self.creation_timestamp = creation_timestamp or current_timestamp()
 
@@ -36,15 +34,13 @@ class Card(object):
         if isinstance(front, Side):
             self.front = front
         elif isinstance(front, str):
-            self.front = Side(concepts=Concept(Fact(front), self.user_id),
-                              user_id=self.user_id)
+            self.front = Side(concepts=Concept(Fact(front)))
         else:
             raise ValueError("Front property can only be of type Side")
         if isinstance(back, Side):
             self.back = back
         elif isinstance(back, str):
-            self.back = Side(concepts=Concept(Fact(back), self.user_id),
-                             user_id=self.user_id)
+            self.back = Side(concepts=Concept(Fact(back)))
         else:
             raise ValueError("Back property can only be of type Side")
 

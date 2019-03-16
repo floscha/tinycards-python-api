@@ -57,7 +57,6 @@ def json_to_concept(json_data):
     """Convert a JSON dict into a Concept object."""
     concept_obj = Concept(
         fact=json_to_fact(json_data['fact']),
-        user_id=json_data['userId'],
         concept_id=json_data['id'],
         creation_timestamp=json_data['createdAt'],
         update_timestamp=json_data['updatedAt']
@@ -74,7 +73,6 @@ def concept_to_json(concept_obj):
         # 'id': concept_obj.id,
         # 'noteFacts': [],
         # 'updatedAt': concept_obj.update_timestamp,
-        # 'userId': concept_obj.user_id
     }
 
     return json_data
@@ -86,7 +84,6 @@ def json_to_side(json_data):
     """Convert a JSON dict into a Side object."""
     side_obj = Side(
         side_id=json_data['id'],
-        user_id=json_data['userId'],
         concepts=[json_to_concept(c) for c in json_data['concepts']]
     )
 
@@ -98,7 +95,6 @@ def side_to_json(side_obj):
     json_data = {
         'concepts': [concept_to_json(c) for c in side_obj.concepts],
         # 'id': side_obj.side_id,
-        # 'userId': side_obj.user_id
     }
 
     return json_data
@@ -111,7 +107,6 @@ def json_to_card(json_data):
     card_obj = Card(
         front=json_to_side(json_data['sides'][0]),
         back=json_to_side(json_data['sides'][1]),
-        user_id=json_data['userId'],
         card_id=json_data['id']
     )
 
@@ -127,7 +122,6 @@ def card_to_json(card_obj):
             side_to_json(card_obj.front),
             side_to_json(card_obj.back)
         ],
-        # 'userId': card_obj.user_id
     }
 
     # Add additional fields if not None.
@@ -259,7 +253,6 @@ def trendable_to_json(trendable_obj: Trendable):
         'ttsLanguages': trendable_data.tts_languages,
         'uiLanguage': trendable_data.ui_language,
         'updatedAt': trendable_data.updated_at,
-        'userId': trendable_data.user_id,
         'username': trendable_data.username
     }
 
