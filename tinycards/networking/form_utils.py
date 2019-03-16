@@ -1,32 +1,27 @@
-from uuid import uuid4
+import json
+import os
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 
-def generate_form_boundary():
-    """Generate a 16 digit boundary like the one used by Tinycards."""
-    boundary = str(uuid4()).replace('-', '')[:16]
-    return boundary
+CARDS = 'cards'
+IMAGE_FILE = 'imageFile'
+# Keys for which the data needs to be encoded in special ways:
+SPECIAL_KEYS = set([IMAGE_FILE, CARDS])
 
 
-def to_multipart_form(data, boundary):
+def to_multipart_form(data, boundary=None):
     """Create a multipart form like produced by HTML forms from a dict."""
-    form_lines = []
+    fields = {}
     for k, v in data.items():
-        form_lines.append('--' + boundary)
-        # Handle special case for imageFile.
-        if k == 'imageFile':
-            form_lines.append('Content-Disposition: form-data; ' +
-                              'name="%s"; filename="cover.jpg"' % k)
-            form_lines.append('Content-Type: image/jpeg')
-            form_lines.append('')
-            form_lines.append('')
-        else:
-            form_lines.append('Content-Disposition: form-data; name="%s"'
-                              % k)
-            form_lines.append('')
-            # Lowercase bool values to follow JSON standards.
-            form_lines.append(str(v) if not isinstance(v, bool)
-                              else str(v).lower())
-    form_lines.append('--' + boundary + '--')
+        if k not in SPECIAL_KEYS:
+            fields[k] = str(v) if not isinstance(v, bool) else str(v).lower()
+    if CARDS in data:
+        fields[CARDS] = json.dumps(data[CARDS])
+    if has_image_file(data):
+        # See also: https://toolbelt.readthedocs.io/en/latest/uploading-data.html#uploading-data
+        fields[IMAGE_FILE] = ('cover.jpg', open(data[IMAGE_FILE], 'rb'), 'image/jpeg')
+    return MultipartEncoder(fields=fields, boundary=boundary)
 
-    joined_form = '\n'.join(form_lines)
-    return joined_form
+
+def has_image_file(data):
+    return IMAGE_FILE in data and data[IMAGE_FILE] and os.path.exists(data[IMAGE_FILE])

@@ -21,6 +21,9 @@ class Deck(object):
         '''
         Initialize a new instance of the Deck class.
         Args:
+            cover (string, optional):
+                The cover image of this deck. If set to a file path, the corresponding file will be uploaded to Tinycards.
+                After creating or updating a deck, this field will be set to the URL of the cover image.
             private (bool, optional):
                 If set to False (the default), the deck will be publicly available.
                 If set to True, it will not. If you need a "shareable link", please also set shareable to True.
@@ -49,10 +52,9 @@ class Deck(object):
         self.compact_id = compact_id
 
         self.creation_timestamp = None
-
         self.title = title
         self.description = description
-
+        self.cover = cover
         self.cards = cards if cards else []
         # Visibility:
         self.private = private

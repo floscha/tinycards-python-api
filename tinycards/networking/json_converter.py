@@ -170,7 +170,7 @@ def deck_to_json(deck_obj, cards_as_string=False):
         'blacklistedQuestionTypes': [],
         'gradingModes': [],
         'fromLanguage': 'en',
-        # 'imageFile': None
+        'imageFile': deck_obj.cover,
     }
 
     return json_data

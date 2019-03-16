@@ -1,10 +1,11 @@
+import json
 import os
 
 import requests
 from retrying import retry
 
 from . import json_converter
-from .form_utils import generate_form_boundary, to_multipart_form
+from .form_utils import to_multipart_form
 from .error.invalid_response import InvalidResponseError
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
@@ -229,16 +230,11 @@ class RestApi(object):
             Deck: The created Deck object if creation was successful.
 
         """
-        form_boundary = generate_form_boundary()
-
+        request_payload = json_converter.deck_to_json(deck)
+        request_payload = to_multipart_form(request_payload)
         # Clone headers to not modify the global variable.
         headers = dict(DEFAULT_HEADERS)
-        # Explicitly set Content-Type to multipart/form-data.
-        headers['Content-Type'] = ('multipart/form-data; boundary=%s'
-                                   % form_boundary)
-
-        request_payload = json_converter.deck_to_json(deck)
-        request_payload = to_multipart_form(request_payload, form_boundary)
+        headers['Content-Type'] = request_payload.content_type
         r = requests.post(url=API_URL + 'decks', data=request_payload,
                           headers=headers, cookies={'jwt_token': self.jwt})
 
@@ -257,15 +253,24 @@ class RestApi(object):
             Deck: The updated Deck object if update was successful.
 
         """
-        headers = DEFAULT_HEADERS
+        # Clone headers to not modify the global variable.
+        headers = dict(DEFAULT_HEADERS)
         request_payload = json_converter.deck_to_json(deck)
+        if os.path.exists(deck.cover):
+            # A new cover has been set on the deck, send the PATCH request as a multipart-form:
+            request_payload = to_multipart_form(request_payload)
+            headers['Content-Type'] = request_payload.content_type
+        else:
+            # Otherwise, send the PATCH request as JSON:
+            request_payload = json.dumps(request_payload)
+            headers['Content-Type'] = 'application/json'
 
         r = requests.patch(url=API_URL + 'decks/' + deck.id,
-                           json=request_payload, headers=headers,
+                           data=request_payload, headers=headers,
                            cookies={'jwt_token': self.jwt})
 
         if not r.ok:
-            raise Exception("Failure while sending updates to server")
+            raise Exception('Failure while sending updates to server: %s' % r.text)
 
         # The response from the PATCH request does not contain cards.
         # Therefore, we have to query the updated deck with an extra request.

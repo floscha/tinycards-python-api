@@ -13,6 +13,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'requests==2.21.0',
+        'requests-toolbelt==0.9.1',
         'retrying==1.3.3',
     ],
     zip_safe=False,
