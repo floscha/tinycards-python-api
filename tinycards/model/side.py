@@ -7,12 +7,10 @@ class Side(object):
     """"Data class for an Tinycards side entity."""
 
     def __init__(self,
-                 user_id,
                  side_id=None,
                  concepts=None):
         """Initialize a new instance of the Side class."""
         self.side_id = side_id if side_id else str(uuid4())
-        self.user_id = user_id
         if isinstance(concepts, Concept):
             self.concepts = [concepts]
         elif isinstance(concepts, list):

@@ -45,7 +45,6 @@ class Deck(object):
         '''
         # IDs:
         self.id = deck_id
-        self.user_id = None
         self.slug = slug
         self.compact_id = compact_id
 
@@ -69,11 +68,7 @@ class Deck(object):
     def add_card(self, card):
         """Add a new card to the deck."""
         if isinstance(card, tuple) and len(card) == 2:
-            new_card = Card(
-                front=card[0],
-                back=card[1],
-                user_id=self.user_id
-            )
+            new_card = Card(front=card[0], back=card[1])
         else:
             raise ValueError("Invalid card used as argument")
         self.cards.append(new_card)
