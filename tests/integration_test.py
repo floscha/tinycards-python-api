@@ -30,7 +30,7 @@ class TestIntegration(unittest.TestCase):
 
     def _test_create_empty_deck(self):
         """Create a new empty deck."""
-        new_deck = Deck('Test Deck', self.tinycards.user_id)
+        new_deck = Deck('Test Deck')
         created_deck = self.tinycards.create_deck(new_deck)
         self.assertTrue(isinstance(created_deck, Deck))
         self.assertEqual('', created_deck.shareable_link)
@@ -83,7 +83,7 @@ class TestIntegration(unittest.TestCase):
 
     def _test_create_shareable_deck(self):
         """Create a new empty, shareable deck."""
-        new_deck = Deck('Test shareable Deck', self.tinycards.user_id, private=True, shareable=True)
+        new_deck = Deck('Test shareable Deck', private=True, shareable=True)
         created_deck = self.tinycards.create_deck(new_deck)
         self.assertTrue(isinstance(created_deck, Deck))
         self.assertNotEqual('', created_deck.shareable_link)
@@ -95,7 +95,7 @@ class TestIntegration(unittest.TestCase):
         """Create a new empty deck, with a cover."""
         current_dir = os.path.dirname(os.path.realpath(__file__))
         blue_cover_filepath = os.path.abspath(os.path.join(current_dir, 'test_logo_blue.jpg'))
-        deck = Deck('Test Deck with cover', self.tinycards.user_id, cover=blue_cover_filepath)
+        deck = Deck('Test Deck with cover', cover=blue_cover_filepath)
         deck = self.tinycards.create_deck(deck)
         self.assertTrue(isinstance(deck, Deck))
         self._assert_cover_was_updated(blue_cover_filepath, deck.cover)

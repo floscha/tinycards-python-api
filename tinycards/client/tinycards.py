@@ -165,7 +165,7 @@ class Tinycards(object):
             Deck: The updated Deck object if update was successful.
 
         """
-        updated_deck = self.data_source.update_deck(deck)
+        updated_deck = self.data_source.update_deck(deck, self.user_id)
 
         return updated_deck
 

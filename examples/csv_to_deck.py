@@ -14,7 +14,7 @@ def csv_to_deck(csv_path):
     """
     # Create new deck.
     tinycards = Tinycards(user_identifier, user_password)
-    deck = Deck('French Words', tinycards.user_id)
+    deck = Deck('French Words')
     deck = tinycards.create_deck(deck)
 
     # Extract data from CSV file.

@@ -216,7 +216,6 @@ class RestApi(object):
         deck = json_converter.json_to_deck(json_response)
         # Set additional properties.
         deck.id = deck_id
-        deck.user_id = user_id
 
         return deck
 
@@ -243,7 +242,7 @@ class RestApi(object):
 
         return created_deck
 
-    def update_deck(self, deck):
+    def update_deck(self, deck, user_id):
         """Update an existing deck.
 
         Args:
@@ -274,7 +273,7 @@ class RestApi(object):
 
         # The response from the PATCH request does not contain cards.
         # Therefore, we have to query the updated deck with an extra request.
-        updated_deck = self.get_deck(deck.id, deck.user_id)
+        updated_deck = self.get_deck(deck.id, user_id)
 
         return updated_deck
 
