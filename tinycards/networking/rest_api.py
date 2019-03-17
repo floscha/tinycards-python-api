@@ -254,13 +254,14 @@ class RestApi(object):
         """
         # Clone headers to not modify the global variable.
         headers = dict(DEFAULT_HEADERS)
-        request_payload = json_converter.deck_to_json(deck)
         if os.path.exists(deck.cover):
             # A new cover has been set on the deck, send the PATCH request as a multipart-form:
+            request_payload = json_converter.deck_to_json(deck)
             request_payload = to_multipart_form(request_payload)
             headers['Content-Type'] = request_payload.content_type
         else:
             # Otherwise, send the PATCH request as JSON:
+            request_payload = json_converter.deck_to_json(deck, as_json_str=True)
             request_payload = json.dumps(request_payload)
             headers['Content-Type'] = 'application/json'
 

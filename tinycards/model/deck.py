@@ -3,6 +3,10 @@ import csv
 from .card import Card
 
 
+NO_TYPING = [['ASSISTED_PRODUCTION', 'PRODUCTION'],['ASSISTED_PRODUCTION', 'PRODUCTION']]
+NO_TYPOS = ['NO_TYPOS', 'NO_TYPOS']
+
+
 class Deck(object):
     """Data class for an Tinycards deck entity."""
 
@@ -17,7 +21,11 @@ class Deck(object):
                  private=False,
                  shareable=False,
                  slug='',
-                 compact_id=''):
+                 compact_id='',
+                 blacklisted_side_indices=None,
+                 blacklisted_question_types=None,
+                 grading_modes=None,
+                 tts_languages=None):
         '''
         Initialize a new instance of the Deck class.
         Args:
@@ -34,6 +42,53 @@ class Deck(object):
                 See also below "Visibility of the deck" section.
             slug (string, optional): short name for the Deck. Only returned by Tinycards upon Deck creation.
             compact_id (string, optional): short unique ID for the deck. Only returned by Tinycards upon Deck creation.
+            blacklisted_side_indices (list, optional):
+                Optional list of indices of sides to NOT use for knowledge testing, e.g.:
+                - [0] to NOT use the front side (0) of the cards and only test knowledge with their back sides (1),
+                - [1] to NOT use the back side (1) of the cards and only test knowledge with their front sides (0).
+            blacklisted_question_types (list, optional):
+                Optional list of lists containing the types of questions to skip for knowledge testing.
+                When provided, the outer list should contain two inner lists:
+                - one for the types of questions to skip for knowledge testing on the front side of cards,
+                - one for the types of questions to skip for knowledge testing on the back side of cards.
+                For example, to test knowledge without having to type answers, for both sides, one should pass:
+                    [
+                        ['ASSISTED_PRODUCTION', 'PRODUCTION'],
+                        ['ASSISTED_PRODUCTION', 'PRODUCTION']
+                    ]
+                The constant tinycards.model.deck.NO_TYPING can be used for this.
+            grading_modes (list, optional):
+                Optional list of modes to evaluate the answers provided.
+                When provided, the list should contain two values:
+                - one for the grading of the front side of cards,
+                - one for the grading of the back side of cards.
+                For example, by default, Tinycards tolerate typos in typed answers. To disable this and have a stricter grading, one should pass:
+                    ['NO_TYPOS', 'NO_TYPOS']
+                The constant tinycards.model.deck.NO_TYPOS can be used for this.
+            tts_languages (list, optional):
+                Optional list of languages to enable text-to-speech.
+                When provided, the list should contain two values:
+                - one for the language of the front side of cards,
+                - one for the language of the back side of cards.
+                The following languages are currently supported by Tinycards:
+                - Catalan:    'ca'
+                - Danish:     'da'
+                - Dutch:      'nl-NL'
+                - English:    'en'
+                - French:     'fr'
+                - German:     'de'
+                - Italian:    'it'
+                - Japanese:   'ja'
+                - Norwegian:  'no-BO'
+                - Polish:     'pl'
+                - Portuguese: 'pt'
+                - Russian:    'ru'
+                - Spanish:    'es'
+                - Swedish:    'sv'
+                - Turkish:    'tr'
+                - Welsh:      'cy'
+                For example, if the front side of cards is in English, and their back side is in Japanese, one should pass:
+                    ['en', 'ja']
 
         Visibility of the deck:
             Tinycards' UI let's you specifiy that a deck is visible to:
@@ -60,6 +115,11 @@ class Deck(object):
         self.private = private
         self.shareable = shareable
         self.shareable_link = 'https://tiny.cards/decks/%s/%s' % (compact_id, slug) if private and shareable and compact_id and slug else ''
+        # Knowledge testing:
+        self.blacklisted_side_indices = blacklisted_side_indices if blacklisted_side_indices else []
+        self.blacklisted_question_types = blacklisted_question_types if blacklisted_question_types else []
+        self.grading_modes = grading_modes if grading_modes else []
+        self.tts_languages = tts_languages if tts_languages else []
 
     def __str__(self):
         return str(self.__dict__)

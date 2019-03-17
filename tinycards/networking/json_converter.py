@@ -1,4 +1,5 @@
 """Several helper functions to convert between data objects and JSON."""
+import json
 from tinycards.model import Card, Concept, Deck, Fact, Favorite
 from tinycards.model import SearchableData, Side, Trendable, TrendableData
 from tinycards.model import User
@@ -146,16 +147,20 @@ def json_to_deck(json_data):
                if 'cards' in json_data else []),
         private=bool(json_data['private']),
         shareable=bool(json_data['shareable']),
+        blacklisted_side_indices=json_data['blacklistedSideIndices'],
+        blacklisted_question_types=json_data['blacklistedQuestionTypes'],
+        grading_modes=json_data['gradingModes'],
+        tts_languages=json_data['ttsLanguages'],
     )
 
 
-def deck_to_json(deck_obj, cards_as_string=False):
+def deck_to_json(deck_obj, as_json_str=False):
     """Convert a Deck object into a JSON dict.
 
     Contains a lot of placeholder values at the moment.
 
     Args:
-        cards_as_string (bool): Convert the cards list into a single string.
+        as_json_str (bool): Convert lists into a single JSON string (required for PATCH with content-type: application/json).
     """
     cards = [card_to_json(c) for c in deck_obj.cards]
 
@@ -164,16 +169,20 @@ def deck_to_json(deck_obj, cards_as_string=False):
         'description': deck_obj.description,
         'private': deck_obj.private,
         'shareable': deck_obj.shareable,
-        'cards': str(cards) if cards_as_string else cards,
-        'ttsLanguages': [],
-        'blacklistedSideIndices': [],
-        'blacklistedQuestionTypes': [],
-        'gradingModes': [],
+        'cards': as_obj_or_json_str(cards, as_json_str),
+        'ttsLanguages': as_obj_or_json_str(deck_obj.tts_languages, as_json_str),
+        'blacklistedSideIndices': as_obj_or_json_str(deck_obj.blacklisted_side_indices, as_json_str),
+        'blacklistedQuestionTypes': as_obj_or_json_str(deck_obj.blacklisted_question_types, as_json_str),
+        'gradingModes': as_obj_or_json_str(deck_obj.grading_modes, as_json_str),
         'fromLanguage': 'en',
         'imageFile': deck_obj.cover,
     }
 
     return json_data
+
+
+def as_obj_or_json_str(obj, as_json_str):
+    return json.dumps(obj) if as_json_str else obj
 
 
 # --- Trendable conversion

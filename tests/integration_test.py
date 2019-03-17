@@ -4,6 +4,7 @@ import requests
 
 from tinycards import Tinycards
 from tinycards.model import Deck
+from tinycards.model.deck import NO_TYPING, NO_TYPOS
 
 
 DEFAULT_COVER_URL = 'https://s3.amazonaws.com/tinycards/image/16cb6cbcb086ae0f622d1cfb7553a096'
@@ -91,10 +92,37 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(200, resp.status_code)
         self._delete_deck(created_deck.id)  # Clean up after ourselves.
 
+    def _test_create_advanced_deck(self):
+        """Create a new empty deck, with advanced options."""
+        deck = Deck('Test advanced Deck', self.tinycards.user_id,
+            blacklisted_side_indices=[0],  # Only test knowledge with back side of cards.
+            blacklisted_question_types=NO_TYPING,  # Only test knowledge with questions which do not require any typing.
+            grading_modes=NO_TYPOS,  # Stricter evaluation of answers.
+            tts_languages=['en', 'ja'],  # Text-to-speech for both front (English) and back (Japanese) sides.
+            )
+        deck = self.tinycards.create_deck(deck)
+        self._assert_advanced_options_are_set(deck)
+        # Add a few tests cards and update the deck, in order to test PATCH with an application/json content-type:
+        deck.add_card(('one', 'いち'))
+        deck.add_card(('two', 'に'))
+        deck = self.tinycards.update_deck(deck)
+        self._assert_advanced_options_are_set(deck)
+        # Set a cover on the deck and update it, in order to test PATCH with a multipart-form content-type:
+        deck.cover = path_to('test_logo_blue.jpg')
+        deck = self.tinycards.update_deck(deck)
+        self._assert_advanced_options_are_set(deck)
+        self._delete_deck(deck.id)  # Clean up after ourselves.
+
+    def _assert_advanced_options_are_set(self, deck):
+        self.assertTrue(isinstance(deck, Deck))
+        self.assertEqual([0], deck.blacklisted_side_indices)
+        self.assertEqual([['ASSISTED_PRODUCTION', 'PRODUCTION'],['ASSISTED_PRODUCTION', 'PRODUCTION']], deck.blacklisted_question_types)
+        self.assertEqual(['NO_TYPOS', 'NO_TYPOS'], deck.grading_modes)
+        self.assertEqual(['en', 'ja'], deck.tts_languages)
+
     def _test_create_deck_with_cover(self):
         """Create a new empty deck, with a cover."""
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        blue_cover_filepath = os.path.abspath(os.path.join(current_dir, 'test_logo_blue.jpg'))
+        blue_cover_filepath = path_to('test_logo_blue.jpg')
         deck = Deck('Test Deck with cover', cover=blue_cover_filepath)
         deck = self.tinycards.create_deck(deck)
         self.assertTrue(isinstance(deck, Deck))
@@ -102,7 +130,7 @@ class TestIntegration(unittest.TestCase):
         # Add a few tests cards (to pass server-side validation) & update the deck's cover:
         deck.add_card(('front test 1', 'back test 1'))
         deck.add_card(('front test 2', 'back test 2'))
-        red_cover_filepath = os.path.abspath(os.path.join(current_dir, 'test_logo_red.jpg'))
+        red_cover_filepath = path_to('test_logo_red.jpg')
         deck.cover = red_cover_filepath
         deck = self.tinycards.update_deck(deck)
         self.assertTrue(isinstance(deck, Deck))
@@ -140,12 +168,19 @@ class TestIntegration(unittest.TestCase):
 
         self._test_create_shareable_deck()
 
+        self._test_create_advanced_deck()
+
         self._test_create_deck_with_cover()
 
     def tearDown(self):
         """Clean up after all tests have finished running."""
         # Delete all decks created during the test routines.
         self._clean_up()
+
+
+def path_to(filename):
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    return os.path.abspath(os.path.join(current_dir, filename))
 
 
 if __name__ == '__main__':
