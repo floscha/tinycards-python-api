@@ -136,13 +136,12 @@ def card_to_json(card_obj):
 
 def json_to_deck(json_data):
     """Convert a JSON dict into a Deck object."""
-    return Deck(
+    deck = Deck(
         title=json_data['name'],
         description=json_data['description'],
         deck_id=json_data['id'],
         compact_id=json_data['compactId'],
         slug=json_data['slug'],
-        cover=json_data['imageUrl'],
         cards=([json_to_card(c) for c in json_data['cards']]
                if 'cards' in json_data else []),
         private=bool(json_data['private']),
@@ -152,6 +151,9 @@ def json_to_deck(json_data):
         grading_modes=json_data['gradingModes'],
         tts_languages=json_data['ttsLanguages'],
     )
+    deck.image_url = json_data['imageUrl']
+    deck.cover_image_url = json_data['coverImageUrl']
+    return deck
 
 
 def deck_to_json(deck_obj, as_json_str=False):
@@ -176,6 +178,7 @@ def deck_to_json(deck_obj, as_json_str=False):
         'gradingModes': as_obj_or_json_str(deck_obj.grading_modes, as_json_str),
         'fromLanguage': 'en',
         'imageFile': deck_obj.cover,
+        'coverImageUrl': deck_obj.cover_image_url,
     }
 
     return json_data

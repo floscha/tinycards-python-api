@@ -35,7 +35,8 @@ class TestIntegration(unittest.TestCase):
         created_deck = self.tinycards.create_deck(new_deck)
         self.assertTrue(isinstance(created_deck, Deck))
         self.assertEqual('', created_deck.shareable_link)
-        self.assertEqual(DEFAULT_COVER_URL, created_deck.cover)
+        self.assertEqual(DEFAULT_COVER_URL, created_deck.image_url)
+        self.assertIsNone(created_deck.cover_image_url)
 
         num_decks = len(self.tinycards.get_decks())
         self.assertEqual(1, num_decks)
@@ -120,30 +121,60 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(['NO_TYPOS', 'NO_TYPOS'], deck.grading_modes)
         self.assertEqual(['en', 'ja'], deck.tts_languages)
 
-    def _test_create_deck_with_cover(self):
-        """Create a new empty deck, with a cover."""
+    def _test_create_deck_with_cover_from_file(self):
+        """Create a new empty deck, with a cover using a local file."""
         blue_cover_filepath = path_to('test_logo_blue.jpg')
         deck = Deck('Test Deck with cover', cover=blue_cover_filepath)
         deck = self.tinycards.create_deck(deck)
         self.assertTrue(isinstance(deck, Deck))
-        self._assert_cover_was_updated(blue_cover_filepath, deck.cover)
+        self._assert_cover_was_updated_with_file(blue_cover_filepath, deck.image_url)
+        self._assert_cover_was_updated_with_file(blue_cover_filepath, deck.cover_image_url)
         # Add a few tests cards (to pass server-side validation) & update the deck's cover:
         deck.add_card(('front test 1', 'back test 1'))
         deck.add_card(('front test 2', 'back test 2'))
-        red_cover_filepath = path_to('test_logo_red.jpg')
+        red_cover_filepath = path_to('test_logo_red.png')
         deck.cover = red_cover_filepath
         deck = self.tinycards.update_deck(deck)
         self.assertTrue(isinstance(deck, Deck))
-        self._assert_cover_was_updated(red_cover_filepath, deck.cover)
+        self._assert_cover_was_updated_with_file(red_cover_filepath, deck.image_url)
+        self._assert_cover_was_updated_with_file(red_cover_filepath, deck.cover_image_url)
         self._delete_deck(deck.id)  # Clean up after ourselves.
 
-    def _assert_cover_was_updated(self, filepath, deck_cover):
-        self.assertNotEqual(DEFAULT_COVER_URL, deck_cover)
-        self.assertTrue(deck_cover.startswith('https://'))
-        resp = requests.get(deck_cover)
+    def _test_create_deck_with_cover_from_url(self):
+        """Create a new empty deck, with a cover using an image available online."""
+        url = 'https://d9np3dj86nsu2.cloudfront.net/thumb/5bd5092200f7fe41e1d926158b5e8243/350_403'
+        deck = Deck('Test Deck with cover', cover=url)
+        deck = self.tinycards.create_deck(deck)
+        self.assertTrue(isinstance(deck, Deck))
+        self._assert_cover_was_updated_with_url(url, deck.image_url)
+        self._assert_cover_was_updated_with_url(url, deck.cover_image_url)
+        # Add a few tests cards (to pass server-side validation) & update the deck's cover:
+        deck.add_card(('front test 1', 'back test 1'))
+        deck.add_card(('front test 2', 'back test 2'))
+        url = 'https://d9np3dj86nsu2.cloudfront.net/thumb/8aaa075410df4c562bdd6c42659f02e2/350_403'
+        deck.cover = url
+        deck = self.tinycards.update_deck(deck)
+        self.assertTrue(isinstance(deck, Deck))
+        self._assert_cover_was_updated_with_url(url, deck.image_url)
+        self._assert_cover_was_updated_with_url(url, deck.cover_image_url)
+        self._delete_deck(deck.id)  # Clean up after ourselves.
+
+    def _assert_cover_was_updated_with_file(self, filepath, deck_cover_url):
+        self.assertNotEqual(DEFAULT_COVER_URL, deck_cover_url)
+        self.assertTrue(deck_cover_url.startswith('https://'))
+        resp = requests.get(deck_cover_url)
         self.assertEqual(200, resp.status_code)
         with open(filepath, 'rb') as f:
             self.assertEqual(f.read(), resp.content)
+
+    def _assert_cover_was_updated_with_url(self, url, deck_cover_url):
+        self.assertNotEqual(DEFAULT_COVER_URL, deck_cover_url)
+        self.assertTrue(deck_cover_url.startswith('https://'))
+        resp_deck = requests.get(deck_cover_url)
+        self.assertEqual(200, resp_deck.status_code)
+        resp_source = requests.get(url)
+        self.assertEqual(200, resp_source.status_code)
+        self.assertEqual(resp_source.content, resp_deck.content)
 
     def _delete_deck(self, deck_id):
         self.tinycards.delete_deck(deck_id)
@@ -170,7 +201,9 @@ class TestIntegration(unittest.TestCase):
 
         self._test_create_advanced_deck()
 
-        self._test_create_deck_with_cover()
+        self._test_create_deck_with_cover_from_file()
+
+        self._test_create_deck_with_cover_from_url()
 
     def tearDown(self):
         """Clean up after all tests have finished running."""

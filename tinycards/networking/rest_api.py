@@ -254,7 +254,7 @@ class RestApi(object):
         """
         # Clone headers to not modify the global variable.
         headers = dict(DEFAULT_HEADERS)
-        if os.path.exists(deck.cover):
+        if deck.cover:
             # A new cover has been set on the deck, send the PATCH request as a multipart-form:
             request_payload = json_converter.deck_to_json(deck)
             request_payload = to_multipart_form(request_payload)
