@@ -5,8 +5,11 @@ import requests
 from retrying import retry
 
 from . import json_converter
-from .form_utils import to_multipart_form
 from .error.invalid_response import InvalidResponseError
+from .form_utils import generate_form_boundary, to_multipart_form
+from .form_utils import to_multipart_form
+from tinycards import model
+
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
 
@@ -40,9 +43,7 @@ class RestApi(object):
 
     @retry(stop_max_attempt_number=5, wait_fixed=500,
            retry_on_exception=_should_retry_login)
-    def login(self,
-              identifier=None,
-              password=None):
+    def login(self, identifier=None, password=None):
         """Log in an user with its Tinycards or Duolingo credentials.
 
         Args:
@@ -92,7 +93,7 @@ class RestApi(object):
             raise ValueError(r.text)
 
         json_response = r.json()
-        user_info = json_converter.json_to_user(json_response)
+        user_info = json_to_object(json_response, model.User)
 
         return user_info
 
@@ -128,8 +129,10 @@ class RestApi(object):
 
         json_response = r.json()
         json_trendables_list = json_response['trendables']
-        trendables = [json_converter.json_to_trendable(trendable)
-                      for trendable in json_trendables_list]
+        trendables = [model.Trendable(trendable_data['id'],
+                                      trendable_data['type'],
+                                      json_to_object(trendable_data, model.TrendableData))
+                      for trendable_data in json_trendables_list]
 
         return trendables
 

@@ -1,6 +1,22 @@
 import csv
+from dataclasses import dataclass, field
+from typing import List
 
 from .card import Card
+
+
+# @dataclass
+# class Deck:
+#     """Data class for a Tinycards deck entity."""
+#     id: str
+#     user_id: str
+#     creation_timestamp: int
+#     title: str
+#     description: str
+#     visibility: str = 'everyone'
+#     front_language: str = None
+#     back_language: str = None
+#     cards: List[Card] = field(default_factory=list)
 
 
 class Deck(object):

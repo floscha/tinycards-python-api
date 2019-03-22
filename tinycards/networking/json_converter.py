@@ -1,10 +1,18 @@
-"""Several helper functions to convert between data objects and JSON."""
+from inflection import camelize, underscore
+
 from tinycards.model import Card, Concept, Deck, Fact, Favorite
 from tinycards.model import SearchableData, Side, Trendable, TrendableData
 from tinycards.model import User
 
 
-# --- User conversion
+def json_to_object(json_data, object_type):
+    # Convert keys to snake case
+    for old_key in json_data.keys():
+        new_key = underscore(old_key)
+        json_data[new_key] = json_data.pop(old_key)
+
+    return object_type(**json_data)
+
 
 def json_to_user(json_data):
     """Convert a JSON dict into a User object."""
@@ -22,7 +30,37 @@ def json_to_user(json_data):
         username=json_data['username']
     )
 
-    return user_obj
+
+def object_to_json(obj) -> dict:
+    object_dict = obj.__dict__
+
+    # Convert keys to camel case
+    for old_key in object_dict.keys():
+        new_key = camelize(old_key, uppercase_first_letter=False)
+        object_dict[new_key] = object_dict.pop(old_key)
+
+    return object_dict
+
+
+# --- User conversion
+
+# def json_to_user(json_data):
+#     """Convert a JSON dict into a User object."""
+#     user_obj = User(
+#         creation_date=json_data.get('creationDate'),
+#         email=json_data.get('email'),
+#         fullname=json_data.get('fullname'),
+#         user_id=json_data['id'],
+#         learning_language=json_data('learningLanguage'),
+#         picture_url=json_data['picture'],
+#         subscribed=json_data['subscribed'],
+#         subscriber_count=json_data['subscriberCount'],
+#         subscription_count=json_data['subscriptionCount'],
+#         ui_language=json_data['uiLanguage'],
+#         username=json_data['username']
+#     )
+#
+#     return user_obj
 
 
 # --- Fact conversion
