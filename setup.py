@@ -17,6 +17,11 @@ setup(
         'retrying==1.3.3',
     ],
     zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'tinycards = tinycards.client.cli:main',
+        ]
+    },
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
