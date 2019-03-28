@@ -10,7 +10,10 @@ def get_image(url):
     '''
     resp = requests.get(url)
     if not resp.ok:
-        raise RuntimeError('Failed to download image from %s: %s - %s' % (url, r.status_code, r.text))
+        raise RuntimeError(
+            'Failed to download image from %s: %s - %s'
+            % (url, resp.status_code, resp.text)
+        )
     img = BytesIO(resp.content)
     mime_type = _mime_type(img, resp.headers, url)
     return img, mime_type
