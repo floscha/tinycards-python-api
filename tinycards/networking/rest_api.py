@@ -6,7 +6,7 @@ from retrying import retry
 
 from . import json_converter
 from .form_utils import to_multipart_form
-from .error.invalid_response import InvalidResponseError
+from .error import InvalidResponseError
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
 
