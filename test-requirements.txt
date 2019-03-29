@@ -1,3 +1,4 @@
 coveralls==1.5.1
+pylama==7.6.6
 pytest==4.1.1
 pytest-cov==2.6.1
