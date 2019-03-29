@@ -117,7 +117,7 @@ class TestIntegration(unittest.TestCase):
     def _assert_advanced_options_are_set(self, deck):
         self.assertTrue(isinstance(deck, Deck))
         self.assertEqual([0], deck.blacklisted_side_indices)
-        self.assertEqual([['ASSISTED_PRODUCTION', 'PRODUCTION'],['ASSISTED_PRODUCTION', 'PRODUCTION']], deck.blacklisted_question_types)
+        self.assertEqual([['ASSISTED_PRODUCTION', 'PRODUCTION'], ['ASSISTED_PRODUCTION', 'PRODUCTION']], deck.blacklisted_question_types)
         self.assertEqual(['NO_TYPOS', 'NO_TYPOS'], deck.grading_modes)
         self.assertEqual(['en', 'ja'], deck.tts_languages)
 
