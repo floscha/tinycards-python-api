@@ -7,7 +7,7 @@ from tinycards.model import Deck
 from tinycards.model.deck import NO_TYPING, NO_TYPOS
 
 
-DEFAULT_COVER_URL = 'https://s3.amazonaws.com/tinycards/image/16cb6cbcb086ae0f622d1cfb7553a096'
+DEFAULT_COVER_URL = 'https://s3.amazonaws.com/tinycards/image/16cb6cbcb086ae0f622d1cfb7553a096'  # noqa
 
 
 class TestIntegration(unittest.TestCase):
@@ -98,19 +98,27 @@ class TestIntegration(unittest.TestCase):
         deck = Deck(
             'Test advanced Deck',
             self.tinycards.user_id,
-            blacklisted_side_indices=[0],  # Only test knowledge with back side of cards.
-            blacklisted_question_types=NO_TYPING,  # Only test knowledge with questions which do not require any typing.
-            grading_modes=NO_TYPOS,  # Stricter evaluation of answers.
-            tts_languages=['en', 'ja'],  # Text-to-speech for both front (English) and back (Japanese) sides.
+            # Only test knowledge with back side of cards.
+            blacklisted_side_indices=[0],
+            # Only test knowledge with questions which do not require any
+            # typing.
+            blacklisted_question_types=NO_TYPING,
+            # Stricter evaluation of answers.
+            grading_modes=NO_TYPOS,
+            # Text-to-speech for both front (English) and back (Japanese)
+            # sides.
+            tts_languages=['en', 'ja'],
         )
         deck = self.tinycards.create_deck(deck)
         self._assert_advanced_options_are_set(deck)
-        # Add a few tests cards and update the deck, in order to test PATCH with an application/json content-type:
+        # Add a few tests cards and update the deck, in order to test PATCH
+        # with an application/json content-type:
         deck.add_card(('one', 'いち'))
         deck.add_card(('two', 'に'))
         deck = self.tinycards.update_deck(deck)
         self._assert_advanced_options_are_set(deck)
-        # Set a cover on the deck and update it, in order to test PATCH with a multipart-form content-type:
+        # Set a cover on the deck and update it, in order to test PATCH with a
+        # multipart-form content-type:
         deck.cover = path_to('test_logo_blue.jpg')
         deck = self.tinycards.update_deck(deck)
         self._assert_advanced_options_are_set(deck)
@@ -119,7 +127,9 @@ class TestIntegration(unittest.TestCase):
     def _assert_advanced_options_are_set(self, deck):
         self.assertTrue(isinstance(deck, Deck))
         self.assertEqual([0], deck.blacklisted_side_indices)
-        self.assertEqual([['ASSISTED_PRODUCTION', 'PRODUCTION'], ['ASSISTED_PRODUCTION', 'PRODUCTION']], deck.blacklisted_question_types)
+        self.assertEqual([['ASSISTED_PRODUCTION', 'PRODUCTION'],
+                          ['ASSISTED_PRODUCTION', 'PRODUCTION']],
+                         deck.blacklisted_question_types)
         self.assertEqual(['NO_TYPOS', 'NO_TYPOS'], deck.grading_modes)
         self.assertEqual(['en', 'ja'], deck.tts_languages)
 
@@ -129,31 +139,39 @@ class TestIntegration(unittest.TestCase):
         deck = Deck('Test Deck with cover', cover=blue_cover_filepath)
         deck = self.tinycards.create_deck(deck)
         self.assertTrue(isinstance(deck, Deck))
-        self._assert_cover_was_updated_with_file(blue_cover_filepath, deck.image_url)
-        self._assert_cover_was_updated_with_file(blue_cover_filepath, deck.cover_image_url)
-        # Add a few tests cards (to pass server-side validation) & update the deck's cover:
+        self._assert_cover_was_updated_with_file(blue_cover_filepath,
+                                                 deck.image_url)
+        self._assert_cover_was_updated_with_file(blue_cover_filepath,
+                                                 deck.cover_image_url)
+        # Add a few tests cards (to pass server-side validation) & update the
+        # deck's cover:
         deck.add_card(('front test 1', 'back test 1'))
         deck.add_card(('front test 2', 'back test 2'))
         red_cover_filepath = path_to('test_logo_red.png')
         deck.cover = red_cover_filepath
         deck = self.tinycards.update_deck(deck)
         self.assertTrue(isinstance(deck, Deck))
-        self._assert_cover_was_updated_with_file(red_cover_filepath, deck.image_url)
-        self._assert_cover_was_updated_with_file(red_cover_filepath, deck.cover_image_url)
+        self._assert_cover_was_updated_with_file(red_cover_filepath,
+                                                 deck.image_url)
+        self._assert_cover_was_updated_with_file(red_cover_filepath,
+                                                 deck.cover_image_url)
         self._delete_deck(deck.id)  # Clean up after ourselves.
 
     def _test_create_deck_with_cover_from_url(self):
-        """Create a new empty deck, with a cover using an image available online."""
-        url = 'https://d9np3dj86nsu2.cloudfront.net/thumb/5bd5092200f7fe41e1d926158b5e8243/350_403'
+        """Create a new empty deck, with a cover using an image available
+            online.
+        """
+        url = 'https://d9np3dj86nsu2.cloudfront.net/thumb/5bd5092200f7fe41e1d926158b5e8243/350_403'  # noqa
         deck = Deck('Test Deck with cover', cover=url)
         deck = self.tinycards.create_deck(deck)
         self.assertTrue(isinstance(deck, Deck))
         self._assert_cover_was_updated_with_url(url, deck.image_url)
         self._assert_cover_was_updated_with_url(url, deck.cover_image_url)
-        # Add a few tests cards (to pass server-side validation) & update the deck's cover:
+        # Add a few tests cards (to pass server-side validation) & update the
+        # deck's cover:
         deck.add_card(('front test 1', 'back test 1'))
         deck.add_card(('front test 2', 'back test 2'))
-        url = 'https://d9np3dj86nsu2.cloudfront.net/thumb/8aaa075410df4c562bdd6c42659f02e2/350_403'
+        url = 'https://d9np3dj86nsu2.cloudfront.net/thumb/8aaa075410df4c562bdd6c42659f02e2/350_403'  # noqa
         deck.cover = url
         deck = self.tinycards.update_deck(deck)
         self.assertTrue(isinstance(deck, Deck))

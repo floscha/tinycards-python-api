@@ -25,7 +25,8 @@ def _mime_type(img, headers, url):
     response's headers, information available via its URL, or by reading the
     beginning of the image's bytes.
     '''
-    if 'Content-Type' in headers and headers['Content-Type'].startswith('image/'):
+    if ('Content-Type' in headers
+            and headers['Content-Type'].startswith('image/')):
         return headers['Content-Type']
     mime_type, _ = guess_type(url)
     if mime_type and mime_type.startswith('image/'):
