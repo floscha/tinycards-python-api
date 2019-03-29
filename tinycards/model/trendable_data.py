@@ -87,4 +87,3 @@ class TrendableData(object):
         self.updated_at = updated_at
         self.user_id = user_id
         self.username = username
-

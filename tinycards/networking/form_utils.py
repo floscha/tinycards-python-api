@@ -10,7 +10,8 @@ BLACKLISTED_QUESTION_TYPES = 'blacklistedQuestionTypes'
 GRADING_MODES = 'gradingModes'
 TTS_LANGUAGES = 'ttsLanguages'
 # Keys for which the data needs to be JSON-encoded:
-JSON_KEYS = set([CARDS, BLACKLISTED_QUESTION_TYPES, GRADING_MODES, TTS_LANGUAGES])
+JSON_KEYS = set([CARDS, BLACKLISTED_QUESTION_TYPES, GRADING_MODES,
+                 TTS_LANGUAGES])
 # Keys for which the data needs to be encoded in special ways:
 SPECIAL_KEYS = set([IMAGE_FILE]).union(JSON_KEYS)
 
@@ -39,8 +40,9 @@ _FILENAME = 'cover.jpg'
 
 def _get_image(path_or_url):
     '''
-    Returns a tuple (filename, file, MIME type) compliant with requests_toolbelt's MultipartEncoder.
-    See also: https://toolbelt.readthedocs.io/en/latest/uploading-data.html#uploading-data
+    Returns a tuple (filename, file, MIME type) compliant with
+        requests_toolbelt's MultipartEncoder.
+    See also: https://toolbelt.readthedocs.io/en/latest/uploading-data.html#uploading-data  # noqa
     '''
     if os.path.exists(path_or_url):
         mime_type = mime_type_from_path(path_or_url)
