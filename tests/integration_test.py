@@ -95,12 +95,14 @@ class TestIntegration(unittest.TestCase):
 
     def _test_create_advanced_deck(self):
         """Create a new empty deck, with advanced options."""
-        deck = Deck('Test advanced Deck', self.tinycards.user_id,
+        deck = Deck(
+            'Test advanced Deck',
+            self.tinycards.user_id,
             blacklisted_side_indices=[0],  # Only test knowledge with back side of cards.
             blacklisted_question_types=NO_TYPING,  # Only test knowledge with questions which do not require any typing.
             grading_modes=NO_TYPOS,  # Stricter evaluation of answers.
             tts_languages=['en', 'ja'],  # Text-to-speech for both front (English) and back (Japanese) sides.
-            )
+        )
         deck = self.tinycards.create_deck(deck)
         self._assert_advanced_options_are_set(deck)
         # Add a few tests cards and update the deck, in order to test PATCH with an application/json content-type:
