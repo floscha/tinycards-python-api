@@ -19,17 +19,17 @@ class UserTest(unittest.TestCase):
         expected_username = 'xyz'
 
         test_user = User(
-            creation_date = expected_creation_date,
-            email = expected_email,
-            fullname = expected_fullname,
-            user_id = expected_id,
-            learning_language = expected_learning_language,
-            picture_url = expected_picture_url,
-            subscribed = expected_subscribed,
-            subscriber_count = expected_subscriber_count,
-            subscription_count = expected_subscription_count,
-            ui_language = expected_ui_language,
-            username = expected_username
+            creation_date=expected_creation_date,
+            email=expected_email,
+            fullname=expected_fullname,
+            user_id=expected_id,
+            learning_language=expected_learning_language,
+            picture_url=expected_picture_url,
+            subscribed=expected_subscribed,
+            subscriber_count=expected_subscriber_count,
+            subscription_count=expected_subscription_count,
+            ui_language=expected_ui_language,
+            username=expected_username
         )
 
         self.assertEqual(expected_creation_date, test_user.creation_date)
