@@ -10,7 +10,10 @@ def get_image(url):
     '''
     resp = requests.get(url)
     if not resp.ok:
-        raise RuntimeError('Failed to download image from %s: %s - %s' % (url, r.status_code, r.text))
+        raise RuntimeError(
+            'Failed to download image from %s: %s - %s'
+            % (url, resp.status_code, resp.text)
+        )
     img = BytesIO(resp.content)
     mime_type = _mime_type(img, resp.headers, url)
     return img, mime_type
@@ -22,7 +25,8 @@ def _mime_type(img, headers, url):
     response's headers, information available via its URL, or by reading the
     beginning of the image's bytes.
     '''
-    if 'Content-Type' in headers and headers['Content-Type'].startswith('image/'):
+    if ('Content-Type' in headers
+            and headers['Content-Type'].startswith('image/')):
         return headers['Content-Type']
     mime_type, _ = guess_type(url)
     if mime_type and mime_type.startswith('image/'):

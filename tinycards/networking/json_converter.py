@@ -162,7 +162,8 @@ def deck_to_json(deck_obj, as_json_str=False):
     Contains a lot of placeholder values at the moment.
 
     Args:
-        as_json_str (bool): Convert lists into a single JSON string (required for PATCH with content-type: application/json).
+        as_json_str (bool): Convert lists into a single JSON string (required
+            for PATCH with content-type: application/json).
     """
     cards = [card_to_json(c) for c in deck_obj.cards]
 
@@ -172,10 +173,18 @@ def deck_to_json(deck_obj, as_json_str=False):
         'private': deck_obj.private,
         'shareable': deck_obj.shareable,
         'cards': as_obj_or_json_str(cards, as_json_str),
-        'ttsLanguages': as_obj_or_json_str(deck_obj.tts_languages, as_json_str),
-        'blacklistedSideIndices': as_obj_or_json_str(deck_obj.blacklisted_side_indices, as_json_str),
-        'blacklistedQuestionTypes': as_obj_or_json_str(deck_obj.blacklisted_question_types, as_json_str),
-        'gradingModes': as_obj_or_json_str(deck_obj.grading_modes, as_json_str),
+        'ttsLanguages': as_obj_or_json_str(
+            deck_obj.tts_languages, as_json_str
+        ),
+        'blacklistedSideIndices': as_obj_or_json_str(
+            deck_obj.blacklisted_side_indices, as_json_str
+        ),
+        'blacklistedQuestionTypes': as_obj_or_json_str(
+            deck_obj.blacklisted_question_types, as_json_str
+        ),
+        'gradingModes': as_obj_or_json_str(
+            deck_obj.grading_modes, as_json_str
+        ),
         'fromLanguage': 'en',
         'imageFile': deck_obj.cover,
         'coverImageUrl': deck_obj.cover_image_url,

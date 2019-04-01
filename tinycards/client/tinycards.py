@@ -1,4 +1,4 @@
-from tinycards.networking.rest_api import RestApi
+from tinycards.networking import RestApi
 
 
 class Tinycards(object):

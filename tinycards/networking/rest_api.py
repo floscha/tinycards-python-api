@@ -6,7 +6,7 @@ from retrying import retry
 
 from . import json_converter
 from .form_utils import to_multipart_form
-from .error.invalid_response import InvalidResponseError
+from .error import InvalidResponseError
 
 API_URL = 'https://tinycards.duolingo.com/api/1/'
 
@@ -255,13 +255,15 @@ class RestApi(object):
         # Clone headers to not modify the global variable.
         headers = dict(DEFAULT_HEADERS)
         if deck.cover:
-            # A new cover has been set on the deck, send the PATCH request as a multipart-form:
+            # A new cover has been set on the deck, send the PATCH request as a
+            # multipart-form:
             request_payload = json_converter.deck_to_json(deck)
             request_payload = to_multipart_form(request_payload)
             headers['Content-Type'] = request_payload.content_type
         else:
             # Otherwise, send the PATCH request as JSON:
-            request_payload = json_converter.deck_to_json(deck, as_json_str=True)
+            request_payload = json_converter.deck_to_json(deck,
+                                                          as_json_str=True)
             request_payload = json.dumps(request_payload)
             headers['Content-Type'] = 'application/json'
 
@@ -270,7 +272,8 @@ class RestApi(object):
                            cookies={'jwt_token': self.jwt})
 
         if not r.ok:
-            raise Exception('Failure while sending updates to server: %s' % r.text)
+            raise Exception('Failure while sending updates to server: %s'
+                            % r.text)
 
         # The response from the PATCH request does not contain cards.
         # Therefore, we have to query the updated deck with an extra request.

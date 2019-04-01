@@ -1,9 +1,11 @@
 import os
 import unittest
-from tinycards.networking.image_utils import get_image, mime_type_from_bytes, mime_type_from_path
+from tinycards.networking.image_utils import (get_image, mime_type_from_bytes,
+                                              mime_type_from_path)
 
 
-DEFAULT_COVER_URL = 'https://s3.amazonaws.com/tinycards/image/16cb6cbcb086ae0f622d1cfb7553a096'
+DEFAULT_COVER_URL = ('https://s3.amazonaws.com/tinycards/image/'
+                     + '16cb6cbcb086ae0f622d1cfb7553a096')
 
 
 class ImageUtilsTest(unittest.TestCase):
@@ -18,8 +20,10 @@ class ImageUtilsTest(unittest.TestCase):
                 mime_type_from_bytes(not_an_img.read())
 
     def test_mime_type_from_path(self):
-        self.assertEqual('image/jpeg', mime_type_from_path(path_to('test_logo_blue.jpg')))
-        self.assertEqual('image/png', mime_type_from_path(path_to('test_logo_red.png')))
+        self.assertEqual('image/jpeg',
+                         mime_type_from_path(path_to('test_logo_blue.jpg')))
+        self.assertEqual('image/png',
+                         mime_type_from_path(path_to('test_logo_red.png')))
         with self.assertRaisesRegex(ValueError, 'Unsupported image type'):
             mime_type_from_path(path_to('image_utils_test.py'))
 
