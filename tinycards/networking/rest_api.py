@@ -33,10 +33,10 @@ class RestApi(object):
     JSON (un-)marshalling.
     """
 
-    def __init__(self):
+    def __init__(self, jwt=None):
         """Initialize a new instance of the RestApi class."""
         # JSON web token
-        self.jwt = None
+        self.jwt = jwt
 
     @retry(stop_max_attempt_number=5, wait_fixed=500,
            retry_on_exception=_should_retry_login)
