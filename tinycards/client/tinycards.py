@@ -92,14 +92,14 @@ class Tinycards(object):
 
     # --- Deck CRUD
 
-    def get_decks(self):
+    def get_decks(self, include_cards=True):
         """Get all Decks for the currently logged in user.
 
         Returns:
             list: The list of retrieved decks.
 
         """
-        deck_previews = self.data_source.get_decks(self.user_id)
+        deck_previews = self.data_source.get_decks(self.user_id, not include_cards)
 
         return deck_previews
 
@@ -131,12 +131,12 @@ class Tinycards(object):
             Deck: The retrieved deck if found. None otherwise.
 
         """
-        all_decks = self.get_decks()
+        all_decks = self.get_decks(False)
         found = [d for d in all_decks if d.title == deck_title]
         if len(found) == 0:
             return None
         elif len(found) == 1:
-            return found[0]
+            return self.get_deck(found[0].id)
         else:
             raise ValueError("Multiple decks with title '%s' found"
                              % deck_title)
