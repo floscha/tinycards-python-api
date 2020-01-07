@@ -15,6 +15,7 @@ setup(
         'requests==2.21.0',
         'requests-toolbelt==0.9.1',
         'retrying==1.3.3',
+        'typer==0.0.8'
     ],
     zip_safe=False,
     entry_points={
