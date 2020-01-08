@@ -33,16 +33,17 @@ class RestApi(object):
     JSON (un-)marshalling.
     """
 
-    def __init__(self):
+    def __init__(self, jwt=None):
         """Initialize a new instance of the RestApi class."""
         # JSON web token
-        self.jwt = None
+        self.jwt = jwt
 
     @retry(stop_max_attempt_number=5, wait_fixed=500,
            retry_on_exception=_should_retry_login)
     def login(self,
               identifier=None,
-              password=None):
+              password=None,
+              silent=False):
         """Log in an user with its Tinycards or Duolingo credentials.
 
         Args:
@@ -53,6 +54,8 @@ class RestApi(object):
             password (str): The user's password to login to Tinycards.
                 Will be taken from ENV if not specified.
                 .. envvar:: TINYCARDS_PASSWORD
+            silent (bool): Does not output the 'Logged in as ...' message
+                when set to True. Defaults to False.
         """
         # Take credentials from ENV if not specified.
         identifier = identifier or os.environ.get('TINYCARDS_IDENTIFIER')
@@ -73,8 +76,9 @@ class RestApi(object):
 
         user_id = json_response.get('id')
         if user_id:
-            print("Logged in as '%s' (%s)"
-                  % (json_response['username'], json_response['email']))
+            if not silent:
+                print("Logged in as '%s' (%s)"
+                      % (json_response['username'], json_response['email']))
         else:
             raise InvalidResponseError("Error while trying to log in:\n%s"
                                        % json_response)

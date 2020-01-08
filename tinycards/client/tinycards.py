@@ -16,14 +16,17 @@ class Tinycards(object):
         password (str): The user's password to login to Tinycards.
             Will be taken from ENV if not specified.
             .. envvar:: TINYCARDS_PASSWORD
+        silent (bool): Does not output the 'Logged in as ...' message
+            when set to True. Defaults to False.
     """
 
     def __init__(self,
                  identifier=None,
-                 password=None):
+                 password=None,
+                 silent=False):
         """Initialize a new instance of the Tinycards class."""
         self.data_source = RestApi()
-        self.user_id = self.data_source.login(identifier, password)
+        self.user_id = self.data_source.login(identifier, password, silent)
 
     # --- Read user info.
 
