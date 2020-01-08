@@ -20,7 +20,7 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'tinycards = tinycards.client.cli:main',
+            'tinycards = tinycards.client.cli:app',
         ]
     },
     classifiers=[
