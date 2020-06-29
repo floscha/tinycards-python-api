@@ -63,7 +63,7 @@ def _list_decks():
 
 def _create_deck(deck_name: str):
     client = Tinycards(silent=True)
-    decks = client.create_deck(Deck(deck_name))
+    client.create_deck(Deck(deck_name))
 
 
 @app.command()

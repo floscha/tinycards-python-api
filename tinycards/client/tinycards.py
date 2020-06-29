@@ -102,7 +102,8 @@ class Tinycards(object):
             list: The list of retrieved decks.
 
         """
-        deck_previews = self.data_source.get_decks(self.user_id, not include_cards)
+        deck_previews = self.data_source.get_decks(self.user_id,
+                                                   not include_cards)
 
         return deck_previews
 
