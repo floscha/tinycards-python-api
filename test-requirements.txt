@@ -1,5 +1,5 @@
-coveralls==1.5.1
-mypy==0.670
-pylama==7.6.6
-pytest==4.1.1
-pytest-cov==2.6.1
+coveralls==2.0.0
+mypy==0.782
+pylama==7.7.1
+pytest==5.4.3
+pytest-cov==2.10.0
