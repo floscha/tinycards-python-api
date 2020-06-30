@@ -147,7 +147,7 @@ def json_to_deck(json_data):
         private=bool(json_data['private']),
         shareable=bool(json_data['shareable']),
         blacklisted_side_indices=json_data['blacklistedSideIndices'],
-        blacklisted_question_types=json_data['blacklistedQuestionTypes'],
+        blacklisted_question_types=None,
         grading_modes=json_data['gradingModes'],
         tts_languages=json_data['ttsLanguages'],
     )
@@ -179,9 +179,7 @@ def deck_to_json(deck_obj, as_json_str=False):
         'blacklistedSideIndices': as_obj_or_json_str(
             deck_obj.blacklisted_side_indices, as_json_str
         ),
-        'blacklistedQuestionTypes': as_obj_or_json_str(
-            deck_obj.blacklisted_question_types, as_json_str
-        ),
+        'blacklistedQuestionTypes': None,
         'gradingModes': as_obj_or_json_str(
             deck_obj.grading_modes, as_json_str
         ),
@@ -207,7 +205,7 @@ def json_to_trendable(json_data):
 
     try:
         trendable_data = TrendableData(
-            json_trendable_data['blacklistedQuestionTypes'],
+            None,
             json_trendable_data['blacklistedSideIndices'],
             json_trendable_data['cardCount'],
             json_trendable_data['compactId'],
