@@ -1,3 +1,5 @@
+⚠️ Since Tinycards has been [disabled by Duolingo](https://support.duolingo.com/hc/en-us/articles/360043909772-UPDATE-Tinycards-Announcement) on September 1, 2020, this repository will no longer be maintained.
+
 <img src="temporary_logo.png" width="128">
 
 # Tinycards Python API
