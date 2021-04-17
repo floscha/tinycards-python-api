@@ -12,10 +12,10 @@ setup(
     license='MIT',
     packages=find_packages(),
     install_requires=[
-        'requests==2.24.0',
+        'requests>=2.23.0',
         'requests-toolbelt==0.9.1',
         'retrying==1.3.3',
-        'typer==0.3.0'
+        'typer>=0.3.0'
     ],
     zip_safe=False,
     entry_points={
